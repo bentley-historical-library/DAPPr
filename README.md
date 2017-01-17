@@ -38,24 +38,20 @@ Then, use the client to interact with the API...
 
 ### Communities
 
-Communities in DSpace are used for organization and hierarchy, and are containers that hold sub-Communities and Collections. (ex: Department of Engineering)
-
 Coming soon!
 
 ### Collections
 
 Collections in DSpace are containers of Items.
-  * deepblue.get_collections(): Returns array of collections of community.
-  * deepblue.get_collection(*integer*): Return collection with id.
-  * deepblue.get_collection_items(*integer*): Return all items of collection.
-  * deepblue.post_collection_item(*integer*, *dictionary*): Create posted item in collection. You must post an Item
-  * deepblue.put_collection(*integer*, *dictionary*): Update collection. You must put Collection.
-  * deepblue.delete_collection(*integer*): Delete collection from DSpace.
-  * deepblue.delete_collection_item(*integer*, *integer*): Delete item in collection.
+  * deepblue.get_collections(): Returns array of collections of community. *Note that I intend to specifically limit myself to a single Comunity, hence the use of the Community endpoint.*
+  * deepblue.get_collection(Collection ID *integer*): Return collection with id.
+  * deepblue.get_collection_items(Collection ID *integer*): Return all items of collection.
+  * deepblue.post_collection_item(Collection ID *integer*, Item *dictionary*): Create posted item in collection. You must post an Item (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
+  * deepblue.put_collection(Collection ID *integer*, Collection *dictionary*): Update collection. You must put Collection (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
+  * deepblue.delete_collection(Collection ID *integer*): Delete collection from DSpace.
+  * deepblue.delete_collection_item(Collection ID *integer*, Item ID *integer*): Delete item in collection.
 
 ### Items
-
-Items in DSpace represent a "work" and combine metadata and files, known as Bitstreams.
 
 Coming soon!
 
