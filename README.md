@@ -24,6 +24,7 @@ Create a config.py file (currenlty ignored) with the following dictionaries:
     
 In your script, create an object, e.g.:
 
+    from dappr import DAPPr
     from config import dev
 
     deepblue = DAPPr(
