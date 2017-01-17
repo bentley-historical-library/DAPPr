@@ -45,12 +45,12 @@ Coming soon!
 
 Collections in DSpace are containers of Items.
   * deepblue.get_collections(): Returns array of collections of community.
-  * deepblue.get_collection(integer): Return collection with id.
-  * deepblue.get_collection_items(integer): Return all items of collection.
-  * deepblue.post_collection_item(integer, item): Create posted item in collection. You must post an Item
-  * deepblue.put_collection(integer, collection): Update collection. You must put Collection.
-  * deepblue.delete_collection(integer): Delete collection from DSpace.
-  * deepblue.delete_collection_item(integer, integer): Delete item in collection.
+  * deepblue.get_collection(*integer*): Return collection with id.
+  * deepblue.get_collection_items(*integer*): Return all items of collection.
+  * deepblue.post_collection_item(*integer*, *dictionary*): Create posted item in collection. You must post an Item
+  * deepblue.put_collection(*integer*, *dictionary*): Update collection. You must put Collection.
+  * deepblue.delete_collection(*integer*): Delete collection from DSpace.
+  * deepblue.delete_collection_item(*integer*, *integer*): Delete item in collection.
 
 ### Items
 
