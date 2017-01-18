@@ -45,6 +45,7 @@ Communities in DSpace are used for organization and hierarchy, and are container
   * `deepblue.post_community(Community DICTIONARY)`: Create new community at top level. You must post community (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
   * `deepblue.post_community_collection(Community ID INTEGER, Collection DICTIONARY)`: Create new collections in community. You must post Collection (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
   * `deepblue.post_community_subcommunity(Community ID INTEGER, Community DICTIONARY)`: Create new subcommunity in community. You must post Community (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
+  * `deepblue.put_community(Community ID INTEGER, Community DICTIONARY)`: Update community. You must put Community (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
 
 ### Collections
 

@@ -46,7 +46,6 @@ class DAPPr:
             "rest-dspace-token": token
         }
         response = requests.post(url, headers=headers, json=body)
-        print response
         
     def _put(self, endpoint, token, body):
         url = self.base_url + endpoint
@@ -133,6 +132,14 @@ class DAPPr:
 
         token = self._login()
         self._post("/RESTapi/communities/" + str(community_id) + "/communities", token, community)
+        self._logout(token)
+        
+    def put_community(self, community_id, community):
+        """
+        Update community. You must put Community"""
+        
+        token = self._login()
+        self._put("/RESTapi/communities/" + str(community_id), token, community)
         self._logout(token)
         
         
