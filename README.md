@@ -42,9 +42,9 @@ Communities in DSpace are used for organization and hierarchy, and are container
   * `community = deepblue.get_community(Community ID INTEGER)`: Returns community.
   * `collections = deepblue.get_community_collections(Community ID INTEGER)`: Returns array of collections of community.
   * `communities = deepblue.get_community_subcommunities(Community ID INTEGER)`: Returns array of subcommunities of community.
-  * `deepblue.post_community()`: Create new community at top level. You must post community (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
-  * `deepblue.post_community_collection(Community ID INTEGER)`: Create new collections in community. You must post Collection (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
-  * `deepblue.post_community_subcommunity(Community ID INTEGER)`: Create new subcommunity in community. You must post Community (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
+  * `deepblue.post_community(Community DICTIONARY)`: Create new community at top level. You must post community (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
+  * `deepblue.post_community_collection(Community ID INTEGER, Collection DICTIONARY)`: Create new collections in community. You must post Collection (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
+  * `deepblue.post_community_subcommunity(Community ID INTEGER, Community DICTIONARY)`: Create new subcommunity in community. You must post Community (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
 
 ### Collections
 
@@ -53,9 +53,9 @@ Collections in DSpace are containers of Items.
   * `collections = deepblue.get_collections()`: Return all collections of DSpace in array.
   * `collection = deepblue.get_collection(Collection ID INTEGER)`: Return collection with id.
   * `items = deepblue.get_collection_items(Collection ID INTEGER)`: Return all items of collection.
-  * `deepblue.post_collection_item(Collection ID INTEGER, Item *dictionary*)`: Create posted item in collection. You must post an Item (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
+  * `deepblue.post_collection_item(Collection ID INTEGER, Item DICTIONARY)`: Create posted item in collection. You must post an Item (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
   * TO-DO: `deepblue.find_collection(Collection Name STRING)`: Find collection by passed name.
-  * `deepblue.put_collection(Collection ID INTEGER, Collection *dictionary*)`: Update collection. You must put Collection (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
+  * `deepblue.put_collection(Collection ID INTEGER, Collection DICTIONARY)`: Update collection. You must put Collection (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
   * `deepblue.delete_collection(Collection ID INTEGER)`: Delete collection from DSpace.
   * `deepblue.delete_collection_item(Collection ID INTEGER, Item ID INTEGER)`: Delete item in collection.
 
