@@ -54,7 +54,7 @@ Collections in DSpace are containers of Items.
   * `collection = deepblue.get_collection(Collection ID INTEGER)`: Return collection with id.
   * `items = deepblue.get_collection_items(Collection ID INTEGER)`: Return all items of collection.
   * `deepblue.post_collection_item(Collection ID INTEGER, Item *dictionary*)`: Create posted item in collection. You must post an Item (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
-  * TO-DO: `deepblue.find_collection(Collection Name STRING): Find collection by passed name.
+  * TO-DO: `deepblue.find_collection(Collection Name STRING)`: Find collection by passed name.
   * `deepblue.put_collection(Collection ID INTEGER, Collection *dictionary*)`: Update collection. You must put Collection (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
   * `deepblue.delete_collection(Collection ID INTEGER)`: Delete collection from DSpace.
   * `deepblue.delete_collection_item(Collection ID INTEGER, Item ID INTEGER)`: Delete item in collection.
