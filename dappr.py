@@ -123,5 +123,60 @@ class DAPPr:
         }
         response = requests.delete(url, headers=headers)
 
-        self._logout(token)    
+        self._logout(token)
+        
+    def get_communities(self):
+        """
+        Returns array of all communities in DSpace."""
+        
+        url = self.base_url + "/RESTapi/communities"
+        response = requests.get(url)
+        
+        communities = response.json()
+        
+        return communities
+        
+    def get_top_communities(self):
+        """
+        Returns array of all top communities in DSpace."""
+        
+        url = self.base_url + "/RESTapi/communities/top-communities"
+        response = requests.get(url)
+        
+        top_communities = response.json()
+        
+        return top_communities
+        
+    def get_community(self, community_id):
+        """
+        Returns community."""
+        
+        url = self.base_url + "/RESTapi/communities/" + str(community_id)
+        response = requests.get(url)
+        
+        community = response.json()
+        
+        return community
+        
+    def get_community_collections(self, community_id):
+        """
+        Returns array of collections of community."""
+        
+        url = self.base_url + "/RESTapi/communities/" + str(community_id) + "/collections"
+        response = requests.get(url)
+        
+        collections = response.json()
+        
+        return collections
+        
+    def get_community_communities(self, community_id):
+        """
+        Returns array of subcommunities of community."""
+        
+        url = self.base_url + "/RESTapi/communities/" + str(community_id) + "/communities"
+        response = requests.get(url)
+        
+        communities = response.json()
+        
+        return communities
         
