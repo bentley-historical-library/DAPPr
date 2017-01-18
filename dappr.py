@@ -62,6 +62,7 @@ class DAPPr:
             "rest-dspace-token": token
         }
         response = requests.delete(url, headers=headers)
+        print response
         
         
     # communities
@@ -140,6 +141,30 @@ class DAPPr:
         
         token = self._login()
         self._put("/RESTapi/communities/" + str(community_id), token, community)
+        self._logout(token)
+        
+    def delete_community(self, community_id):
+        """
+        Delete community."""
+        
+        token = self._login()
+        self._delete("/RESTapi/communities/" + str(community_id), token)
+        self._logout(token)
+        
+    def delete_community_collection(self, community_id, collection_id):
+        """
+        Delete collection in community."""
+        
+        token = self._login()
+        self._delete("/RESTapi/communities/" + str(community_id) + "/collections/" + str(collection_id), token)
+        self._logout(token)
+        
+    def delete_community_subcommunity(self, community_id, subcommunity_id):
+        """
+        Delete subcommunity in community."""
+        
+        token = self._login()
+        self._delete("/RESTapi/communities/" + str(community_id) + "/communities/" + str(subcommunity_id), token)
         self._logout(token)
         
         
