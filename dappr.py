@@ -13,7 +13,7 @@ class DAPPr:
         self.password = password
         self.community_id = community_id
 
-    def login(self):
+    def _login(self):
         url = self.base_url + "/RESTapi/login"
         body = {"email": self.email, "password": self.password}
         response = requests.post(url, json=body)
@@ -22,7 +22,7 @@ class DAPPr:
         
         return token
         
-    def logout(self, token):
+    def _logout(self, token):
         url = self.base_url + "/RESTapi/logout"
         headers = {
             "Accept": "application/json",
@@ -67,7 +67,7 @@ class DAPPr:
         """
         Create posted item in collection. You must post an Item"""
         
-        token = self.login()
+        token = self._login()
         
         url = self.base_url + "/RESTapi/collections/" + str(collection_id) + "/items"
         headers = {
@@ -77,13 +77,13 @@ class DAPPr:
         body = item
         response = requests.post(url, headers=headers, json=body)
                 
-        self.logout(token)
+        self._logout(token)
         
     def put_collection(self, collection_id, collection):
         """
         Update collection. You must put Collection."""
         
-        token = self.login()
+        token = self._login()
         
         url = self.base_url + "/RESTapi/collections/" + str(collection_id)
         headers = {
@@ -93,13 +93,13 @@ class DAPPr:
         body = collection
         response = requests.put(url, headers=headers, json=body)
         
-        self.logout(token)
+        self._logout(token)
         
     def delete_collection(self, collection_id):
         """
         Delete collection from DSpace."""
         
-        token = self.login()
+        token = self._login()
         
         url = self.base_url + "/RESTapi/collections/" + str(collection_id)
         headers = {
@@ -108,13 +108,13 @@ class DAPPr:
         }
         response = requests.delete(url, headers=headers)
         
-        self.logout(token)
+        self._logout(token)
         
     def delete_collection_item(self, collection_id, item_id):
         """
         Delete item in collection."""
         
-        token = self.login()
+        token = self._login()
         
         url = self.base_url + "/RESTapi/collections/" + str(collection_id) + "/items/" + str(item_id)
         headers = {
@@ -123,5 +123,5 @@ class DAPPr:
         }
         response = requests.delete(url, headers=headers)
 
-        self.logout(token)    
+        self._logout(token)    
         
