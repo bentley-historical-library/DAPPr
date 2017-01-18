@@ -34,7 +34,7 @@ class DAPPr:
         """
         Returns array of collections of community."""
         
-        url = self.base_url + "/RESTapi/communities/" + str(self.community_id) + "/collections"
+        url = self.base_url + "/RESTapi/collections"
         response = requests.get(url)
         
         collections = response.json()

@@ -12,14 +12,12 @@ Create a config.py file (currenlty ignored) with the following dictionaries:
         "base_url": string,
         "email": string,
         "password": string,
-        "community_id": integer
     }
 
     prod = {
         "base_url": string,
         "email": string,
         "password": string,
-        "community_id": integer
     }
     
 In your script, create an object, e.g.:
@@ -31,7 +29,6 @@ In your script, create an object, e.g.:
         dev.get("base_url"),
         dev.get("email"),
         dev.get("password"), 
-        dev.get("community_id")
     )
     
 Then, use the client to interact with the API...
@@ -43,7 +40,7 @@ Coming soon!
 ### Collections
 
 Collections in DSpace are containers of Items.
-  * deepblue.get_collections(): Returns array of collections of community. *Note that I intend to specifically limit myself to a single Comunity, hence the use of the Community endpoint.*
+  * deepblue.get_collections(): Return all collections of DSpace in array.
   * deepblue.get_collection(Collection ID *integer*): Return collection with id.
   * deepblue.get_collection_items(Collection ID *integer*): Return all items of collection.
   * deepblue.post_collection_item(Collection ID *integer*, Item *dictionary*): Create posted item in collection. You must post an Item (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
