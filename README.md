@@ -9,15 +9,15 @@ DSpace [REST] API Python Programming [Language] resource (DAPPr) is a client to 
 Create a config.py file (currenlty ignored) with the following dictionaries:
 
     dev = {
-        "base_url": string,
-        "email": string,
-        "password": string,
+        "base_url": STRING,
+        "email": STRING,
+        "password": STRING,
     }
 
     prod = {
-        "base_url": string,
-        "email": string,
-        "password": string,
+        "base_url": STRING,
+        "email": STRING,
+        "password": STRING,
     }
     
 In your script, create an object, e.g.:
@@ -41,7 +41,10 @@ Communities in DSpace are used for organization and hierarchy, and are container
   * `top_communities = deepblue.get_top_communities()`: Returns array of all top communities in DSpace.
   * `community = deepblue.get_community(Community ID INTEGER)`: Returns community.
   * `collections = deepblue.get_community_collections(Community ID INTEGER)`: Returns array of collections of community.
-  * `communities = deepblue.get_community_communities(Community ID INTEGER)`: Returns array of subcommunities of community.
+  * `communities = deepblue.get_community_subcommunities(Community ID INTEGER)`: Returns array of subcommunities of community.
+  * `deepblue.post_community()`: Create new community at top level. You must post community (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
+  * `deepblue.post_community_collection(Community ID INTEGER)`: Create new collections in community. You must post Collection (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
+  * `deepblue.post_community_subcommunity(Community ID INTEGER)`: Create new subcommunity in community. You must post Community (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
 
 ### Collections
 
