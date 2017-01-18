@@ -39,19 +39,22 @@ Communities in DSpace are used for organization and hierarchy, and are container
 
   * `communities = deepblue.get_communities()`: Returns array of all communities in DSpace.
   * `top_communities = deepblue.get_top_communities()`: Returns array of all top communities in DSpace.
+  * `community = deepblue.get_community(Community ID INTEGER)`: Returns community.
+  * `collections = deepblue.get_community_collections(Community ID INTEGER)`: Returns array of collections of community.
+  * `communities = deepblue.get_community_communities(Community ID INTEGER)`: Returns array of subcommunities of community.
 
 ### Collections
 
 Collections in DSpace are containers of Items.
 
   * `collections = deepblue.get_collections()`: Return all collections of DSpace in array.
-  * `collection = deepblue.get_collection(Collection ID *integer*)`: Return collection with id.
-  * `items = deepblue.get_collection_items(Collection ID *integer*)`: Return all items of collection.
-  * `deepblue.post_collection_item(Collection ID *integer*, Item *dictionary*)`: Create posted item in collection. You must post an Item (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
-  * TO-DO: `deepblue.find_collection(Collection Name *string*): Find collection by passed name.
-  * `deepblue.put_collection(Collection ID *integer*, Collection *dictionary*)`: Update collection. You must put Collection (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
-  * `deepblue.delete_collection(Collection ID *integer*)`: Delete collection from DSpace.
-  * `deepblue.delete_collection_item(Collection ID *integer*, Item ID *integer*)`: Delete item in collection.
+  * `collection = deepblue.get_collection(Collection ID INTEGER)`: Return collection with id.
+  * `items = deepblue.get_collection_items(Collection ID INTEGER)`: Return all items of collection.
+  * `deepblue.post_collection_item(Collection ID INTEGER, Item *dictionary*)`: Create posted item in collection. You must post an Item (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
+  * TO-DO: `deepblue.find_collection(Collection Name STRING): Find collection by passed name.
+  * `deepblue.put_collection(Collection ID INTEGER, Collection *dictionary*)`: Update collection. You must put Collection (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
+  * `deepblue.delete_collection(Collection ID INTEGER)`: Delete collection from DSpace.
+  * `deepblue.delete_collection_item(Collection ID INTEGER, Item ID INTEGER)`: Delete item in collection.
 
 ### Items
 
