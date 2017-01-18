@@ -38,6 +38,7 @@ class DAPPr:
         response = requests.get(url)
         
         try:
+            resopnse = response.json()
             return response
         except:
             print "Error GETting " + endpoint
@@ -52,6 +53,7 @@ class DAPPr:
         response = requests.post(url, headers=headers, json=body)
         
         try:
+            resopnse = response.json()
             return response
         except:
             print "Error POSTing " + str(body) + " to " + endpoint
@@ -66,6 +68,7 @@ class DAPPr:
         response = requests.put(url, headers=headers, json=body)
         
         try:
+            resopnse = response.json()
             return response
         except:
             print "Error PUTting " + str(body) + " to " + endpoint
@@ -80,6 +83,7 @@ class DAPPr:
         response = requests.delete(url, headers=headers)
         
         try:
+            resopnse = response.json()
             return response
         except:
             print "Error DELETEing " + endpoint
@@ -91,45 +95,40 @@ class DAPPr:
         Returns array of all communities in DSpace."""
         
         response = self._get("/RESTapi/communities")
-        communities = response.json()
         
-        return communities
+        return response
         
     def get_top_communities(self):
         """
         Returns array of all top communities in DSpace."""
         
         response = self._get("/RESTapi/communities/top-communities")        
-        top_communities = response.json()
         
-        return top_communities
+        return response
         
     def get_community(self, community_id):
         """
         Returns community."""
         
         response = self._get("/RESTapi/communities/" + str(community_id))
-        community = response.json()
         
-        return community
+        return response
         
     def get_community_collections(self, community_id):
         """
         Returns array of collections of community."""
         
         response = self._get("/RESTapi/communities/" + str(community_id) + "/collections")
-        collections = response.json()
         
-        return collections
+        return response
         
     def get_community_subcommunities(self, community_id):
         """
         Returns array of subcommunities of community."""
         
         response = self._get("/RESTapi/communities/" + str(community_id) + "/communities")
-        communities = response.json()
         
-        return communities
+        return response
         
     def post_community(self, community):
         """
@@ -137,10 +136,9 @@ class DAPPr:
         
         token = self._login()
         response = self._post("/RESTapi/communities/", token, community)
-        community = resonse.json()
         self._logout(token)
         
-        return community
+        return response
         
     def post_community_collection(self, community_id, collection):
         """
@@ -148,10 +146,9 @@ class DAPPr:
         
         token = self._login()
         response = self._post("/RESTapi/communities/" + str(community_id) + "/collections", token, collection)
-        collection = resonse.json()
         self._logout(token)
         
-        return collection
+        return response
         
     def post_community_subcommunity(self, community_id, community):
         """
@@ -159,10 +156,9 @@ class DAPPr:
 
         token = self._login()
         response = self._post("/RESTapi/communities/" + str(community_id) + "/communities", token, community)
-        subcommunity = response.json()
         self._logout(token)
         
-        return subcommunity
+        return response
         
     def put_community(self, community_id, community):
         """
@@ -170,10 +166,9 @@ class DAPPr:
         
         token = self._login()
         response = self._put("/RESTapi/communities/" + str(community_id), token, community)
-        community = response.json()
         self._logout(token)
         
-        return community
+        return response
         
     def delete_community(self, community_id):
         """
@@ -212,27 +207,24 @@ class DAPPr:
         Returns array of collections of community."""
         
         response = self._get("/RESTapi/collections")
-        collections = response.json()
         
-        return collections
+        return response
         
     def get_collection(self, collection_id):
         """
         Return collection with id."""
         
         response = self._get("/RESTapi/collections/" + str(collection_id))
-        collection = response.json()
         
-        return collection
+        return response
         
     def get_collection_items(self, collection_id):
         """
         Return all items of collection."""
         
         response = self._get("/RESTapi/collections/" + str(collection_id) + "/items")
-        items = response.json()
         
-        return items
+        return response
         
     def post_collection_item(self, collection_id, item):
         """
@@ -240,10 +232,9 @@ class DAPPr:
         
         token = self._login()
         response = self._post("/RESTapi/collections/" + str(collection_id) + "/items", token, item)     
-        item = response.json()
         self._logout(token)
         
-        return item
+        return response
         
     # TO-DO: Find collection by passed name.
         
@@ -253,10 +244,9 @@ class DAPPr:
         
         token = self._login()
         response = self._put("/RESTapi/collections/" + str(collection_id), token, collection)
-        collection = response.json()
         self._logout(token)
         
-        return collection
+        return response
         
     def delete_collection(self, collection_id):
         """
