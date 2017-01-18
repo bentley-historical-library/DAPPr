@@ -37,7 +37,11 @@ class DAPPr:
         url = self.base_url + endpoint
         response = requests.get(url)
         
-        return response
+        try:
+            return response
+        except:
+            print "Error GETting " + endpoint
+            exit()
         
     def _post(self, endpoint, token, body):
         url = self.base_url + endpoint
@@ -47,6 +51,12 @@ class DAPPr:
         }
         response = requests.post(url, headers=headers, json=body)
         
+        try:
+            return response
+        except:
+            print "Error POSTing " + str(body) + " to " + endpoint
+            exit()
+        
     def _put(self, endpoint, token, body):
         url = self.base_url + endpoint
         headers = {
@@ -55,6 +65,12 @@ class DAPPr:
         }
         response = requests.put(url, headers=headers, json=body)
         
+        try:
+            return response
+        except:
+            print "Error PUTting " + str(body) + " to " + endpoint
+            exit()
+        
     def _delete(self, endpoint, token):
         url = self.base_url + endpoint
         headers = {
@@ -62,8 +78,12 @@ class DAPPr:
             "rest-dspace-token": token
         }
         response = requests.delete(url, headers=headers)
-        print response
         
+        try:
+            return response
+        except:
+            print "Error DELETEing " + endpoint
+            exit()
         
     # communities
     def get_communities(self):
@@ -116,56 +136,74 @@ class DAPPr:
         Create new community at top level. You must post community."""
         
         token = self._login()
-        self._post("/RESTapi/communities/", token, community)
+        response = self._post("/RESTapi/communities/", token, community)
+        community = resonse.json()
         self._logout(token)
+        
+        return community
         
     def post_community_collection(self, community_id, collection):
         """
         Create new collections in community. You must post Collection."""
         
         token = self._login()
-        self._post("/RESTapi/communities/" + str(community_id) + "/collections", token, collection)
+        response = self._post("/RESTapi/communities/" + str(community_id) + "/collections", token, collection)
+        collection = resonse.json()
         self._logout(token)
+        
+        return collection
         
     def post_community_subcommunity(self, community_id, community):
         """
         Create new subcommunity in community. You must post Community."""
 
         token = self._login()
-        self._post("/RESTapi/communities/" + str(community_id) + "/communities", token, community)
+        response = self._post("/RESTapi/communities/" + str(community_id) + "/communities", token, community)
+        subcommunity = response.json()
         self._logout(token)
+        
+        return subcommunity
         
     def put_community(self, community_id, community):
         """
         Update community. You must put Community"""
         
         token = self._login()
-        self._put("/RESTapi/communities/" + str(community_id), token, community)
+        response = self._put("/RESTapi/communities/" + str(community_id), token, community)
+        community = response.json()
         self._logout(token)
+        
+        return community
         
     def delete_community(self, community_id):
         """
         Delete community."""
         
         token = self._login()
-        self._delete("/RESTapi/communities/" + str(community_id), token)
+        response = self._delete("/RESTapi/communities/" + str(community_id), token)
         self._logout(token)
+        
+        return response
         
     def delete_community_collection(self, community_id, collection_id):
         """
         Delete collection in community."""
         
         token = self._login()
-        self._delete("/RESTapi/communities/" + str(community_id) + "/collections/" + str(collection_id), token)
+        response = self._delete("/RESTapi/communities/" + str(community_id) + "/collections/" + str(collection_id), token)
         self._logout(token)
+        
+        return response
         
     def delete_community_subcommunity(self, community_id, subcommunity_id):
         """
         Delete subcommunity in community."""
         
         token = self._login()
-        self._delete("/RESTapi/communities/" + str(community_id) + "/communities/" + str(subcommunity_id), token)
+        response = self._delete("/RESTapi/communities/" + str(community_id) + "/communities/" + str(subcommunity_id), token)
         self._logout(token)
+        
+        return response
         
         
     # collections
@@ -201,30 +239,42 @@ class DAPPr:
         Create posted item in collection. You must post an Item"""
         
         token = self._login()
-        self._post("/RESTapi/collections/" + str(collection_id) + "/items", token, item)     
+        response = self._post("/RESTapi/collections/" + str(collection_id) + "/items", token, item)     
+        item = response.json()
         self._logout(token)
+        
+        return item
+        
+    # TO-DO: Find collection by passed name.
         
     def put_collection(self, collection_id, collection):
         """
         Update collection. You must put Collection."""
         
         token = self._login()
-        self._put("/RESTapi/collections/" + str(collection_id), token, collection)
+        response = self._put("/RESTapi/collections/" + str(collection_id), token, collection)
+        collection = response.json()
         self._logout(token)
+        
+        return collection
         
     def delete_collection(self, collection_id):
         """
         Delete collection from DSpace."""
         
         token = self._login()
-        self._delete("/RESTapi/collections/" + str(collection_id), token)
+        response = self._delete("/RESTapi/collections/" + str(collection_id), token)
         self._logout(token)
+        
+        return response
         
     def delete_collection_item(self, collection_id, item_id):
         """
         Delete item in collection."""
         
         token = self._login()
-        self._delete("/RESTapi/collections/" + str(collection_id) + "/items/" + str(item_id), token)
+        response = self._delete("/RESTapi/collections/" + str(collection_id) + "/items/" + str(item_id), token)
         self._logout(token)
+        
+        return response
     
