@@ -1,5 +1,6 @@
 import requests
 import json
+import os
 
 class DAPPr:
     """
@@ -37,41 +38,54 @@ class DAPPr:
         url = self.base_url + endpoint
         response = requests.get(url)
         
-        try:
-            resopnse = response.json()
+        if response.status_code == 200:
             return response
-        except:
-            print "Error GETting " + endpoint
+        else:
+            print "Error (" + str(response.status_code) + ") GETting " + endpoint
             exit()
         
-    def _post(self, endpoint, token, body):
+    def _post_json(self, endpoint, token, json):
         url = self.base_url + endpoint
         headers = {
             "Accept": "application/json",
             "rest-dspace-token": token
         }
-        response = requests.post(url, headers=headers, json=body)
+        response = requests.post(url, headers=headers, json=json)
         
-        try:
-            resopnse = response.json()
+        if response.status_code == 200:
             return response
-        except:
-            print "Error POSTing " + str(body) + " to " + endpoint
+        else:
+            print "Error (" + str(response.status_code) + ") POSTing " + str(json) + " to " + endpoint
             exit()
-        
-    def _put(self, endpoint, token, body):
+            
+    def _post_data(self, endpoint, token, path):
         url = self.base_url + endpoint
         headers = {
             "Accept": "application/json",
             "rest-dspace-token": token
         }
-        response = requests.put(url, headers=headers, json=body)
+        with open(os.path.join(path), mode="r") as f:
+            data = f.read()
+        response = requests.post(url, headers=headers, data=data)
         
-        try:
-            resopnse = response.json()
+        if response.status_code == 200:
             return response
-        except:
-            print "Error PUTting " + str(body) + " to " + endpoint
+        else:
+            print "Error (" + str(response.status_code) + ") POSTing " + str(path) + " to " + endpoint
+            exit()
+        
+    def _put(self, endpoint, token, json):
+        url = self.base_url + endpoint
+        headers = {
+            "Accept": "application/json",
+            "rest-dspace-token": token
+        }
+        response = requests.put(url, headers=headers, json=json)
+        
+        if response.status_code == 200:
+            return response
+        else:
+            print "Error PUTting (" + str(response.status_code) + ") " + str(json) + " to " + endpoint
             exit()
         
     def _delete(self, endpoint, token):
@@ -82,11 +96,10 @@ class DAPPr:
         }
         response = requests.delete(url, headers=headers)
         
-        try:
-            resopnse = response.json()
+        if response.status_code == 200:
             return response
-        except:
-            print "Error DELETEing " + endpoint
+        else:
+            print "Error DELETEing (" + str(response.status_code) + ") " + endpoint
             exit()
         
     # communities
@@ -150,12 +163,12 @@ class DAPPr:
         except:
             exit()
         
-    def post_community(self, community):
+    def post_community(self, community_dictionary):
         """
         Create new community at top level. You must post community."""
         
         token = self._login()
-        response = self._post("/RESTapi/communities/", token, community)
+        response = self._post_json("/RESTapi/communities/", token, community_dictionary)
         self._logout(token)
         
         try:
@@ -164,12 +177,12 @@ class DAPPr:
         except:
             exit()
         
-    def post_community_collection(self, community_id, collection):
+    def post_community_collection(self, community_id, collection_dictionary):
         """
         Create new collections in community. You must post Collection."""
         
         token = self._login()
-        response = self._post("/RESTapi/communities/" + str(community_id) + "/collections", token, collection)
+        response = self._post_json("/RESTapi/communities/" + str(community_id) + "/collections", token, collection_dictionary)
         self._logout(token)
         
         try:
@@ -178,12 +191,12 @@ class DAPPr:
         except:
             exit()
         
-    def post_community_subcommunity(self, community_id, community):
+    def post_community_subcommunity(self, community_id, community_dictionary):
         """
         Create new subcommunity in community. You must post Community."""
 
         token = self._login()
-        response = self._post("/RESTapi/communities/" + str(community_id) + "/communities", token, community)
+        response = self._post_json("/RESTapi/communities/" + str(community_id) + "/communities", token, community_dictionary)
         self._logout(token)
         
         try:
@@ -192,19 +205,15 @@ class DAPPr:
         except:
             exit()
         
-    def put_community(self, community_id, community):
+    def put_community(self, community_id, community_dictionary):
         """
         Update community. You must put Community"""
         
         token = self._login()
-        response = self._put("/RESTapi/communities/" + str(community_id), token, community)
+        response = self._put("/RESTapi/communities/" + str(community_id), token, community_dictionary)
         self._logout(token)
         
-        try:
-            community = response.json()
-            return response
-        except:
-            exit()
+        return response
         
     def delete_community(self, community_id):
         """
@@ -274,12 +283,12 @@ class DAPPr:
         except:
             exit()
         
-    def post_collection_item(self, collection_id, item):
+    def post_collection_item(self, collection_id, item_dictionary):
         """
         Create posted item in collection. You must post an Item"""
         
         token = self._login()
-        response = self._post("/RESTapi/collections/" + str(collection_id) + "/items", token, item)     
+        response = self._post_json("/RESTapi/collections/" + str(collection_id) + "/items", token, item_dictionary)     
         self._logout(token)
         
         try:
@@ -290,19 +299,15 @@ class DAPPr:
         
     # TO-DO: Find collection by passed name.
         
-    def put_collection(self, collection_id, collection):
+    def put_collection(self, collection_id, collection_dictionary):
         """
         Update collection. You must put Collection."""
         
         token = self._login()
-        response = self._put("/RESTapi/collections/" + str(collection_id), token, collection)
+        response = self._put("/RESTapi/collections/" + str(collection_id), token, collection_dictionary)
         self._logout(token)
         
-        try:
-            collection = response.json()
-            return collection
-        except:
-            exit()
+        return response
         
     def delete_collection(self, collection_id):
         """
@@ -320,6 +325,126 @@ class DAPPr:
         
         token = self._login()
         response = self._delete("/RESTapi/collections/" + str(collection_id) + "/items/" + str(item_id), token)
+        self._logout(token)
+        
+        return response
+        
+    
+    # items
+    def get_items(self):
+        """
+        Return list of items."""
+        
+        response = self._get("/RESTapi/items")
+        
+        try:
+            items = response.json()
+            return items
+        except:
+            exit()
+            
+    def get_item(self, item_id):
+        """
+        Return item."""
+        
+        response = self._get("/RESTapi/items/" + str(item_id))
+        
+        try:
+            item = response.json()
+            return item
+        except:
+            exit()
+    
+    def get_item_metadata(self, item_id):
+        """
+        Return item metadata."""
+        
+        response = self._get("/RESTapi/items/" + str(item_id) + "/metadata")
+        
+        try:
+            metadata = response.json()
+            return metadata
+        except:
+            exit()
+    
+    def get_item_bitstreams(self, item_id):
+        """
+        Return item bitstreams."""
+        
+        response = self._get("/RESTapi/items/" + str(item_id) + "/bitstreams")
+        
+        try:
+            bitstreams = response.json()
+            return bitstreams
+        except:
+            exit()
+            
+    # TO-DO: Find items by metadata entry. You must post a MetadataEntry.
+    
+    def post_item_metadata(self, item_id, metadata_list):
+        """
+        Add metadata to item. You must post an array of MetadataEntry"""
+        
+        token = self._login()
+        response = self._post_json("/RESTapi/items/" + str(item_id) + "/metadata", token, metadata_list)
+        self._logout(token)
+        
+        try:
+            metadata = response.json()
+            return metadata
+        except:
+            exit()
+            
+    def post_item_bitstream(self, item_id, bitstream_path):
+        """
+        Add bitstream to item. You must post a Bitstream"""
+        
+        token = self._login()
+        response = self._post_data("/RESTapi/items/" + str(item_id) + "/bitstreams", token, bitstream_path)
+        self._logout(token)
+        
+        try:
+            bitstream = response.json()
+            return bitstream
+        except:
+            exit()
+            
+    def put_item_metadata(self, item_id, metadata_list):
+        """
+        Update metadata in item. You must put a MetadataEntry"""
+        
+        token = self._login()
+        response = self._put("/RESTapi/items/" + str(item_id) + "/metadata", token, metadata_list)
+        self._logout(token)
+        
+        return response
+        
+    def delete_item(self, item_id):
+        """
+        Delete item."""
+        
+        token = self._login()
+        response = self._delete("/RESTapi/items/" + str(item_id), token)
+        self._logout(token)
+        
+        return response
+        
+    def delete_item_metadata(self, item_id):
+        """
+        Clear item metadata."""
+        
+        token = self._login()
+        response = self._delete("/RESTapi/items/" + str(item_id) + "/metadata", token)
+        self._logout(token)
+        
+        return response
+        
+    def delete_item_bitstream(self, item_id, bitstream_id):
+        """
+        Delete item bitstream."""
+        
+        token = self._login()
+        response = self._delete("/RESTapi/items/" + str(item_id) + "/bitstreams/" + str(bitstream_id), token)
         self._logout(token)
         
         return response
