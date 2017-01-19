@@ -75,9 +75,9 @@ Items in DSpace represent a "work" and combine metadata and files, known as Bits
   * `metadata = deepblue.post_item_metadata(Item ID INTEGER, Metdata LIST)`: Add metadata to item. You must post an array of MetadataEntry (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
   * `bitstream = deepblue.post_item_bitstream(Item ID INTEGER, Bitstream PATH)`: Add bitstream to item. You must post a Bitstream (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
   * `deepblue.put_item_metadata(Item ID Integer, Metadata LIST)`: Update metadata in item. You must put a MetadataEntry (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
-  * 'deepblue.delete_item(Item ID INTEGER)`: Delete item.
-  * 'deepblue.delete_item_metadata(Item ID INTEGER)` Clear item metadata.
-  * 'deepblue.delete_item_bitstream(Item ID INTEGER, Bitstream ID INTEGER)` Delete item bitstream.
+  * `deepblue.delete_item(Item ID INTEGER)`: Delete item.
+  * `deepblue.delete_item_metadata(Item ID INTEGER)` Clear item metadata.
+  * `deepblue.delete_item_bitstream(Item ID INTEGER, Bitstream ID INTEGER)` Delete item bitstream.
   
 ### Bitstreams
 
