@@ -98,7 +98,8 @@ In DSpace, Communities, Collections, and Items typically get minted a Handle Ide
 In DSpace, Communities, Collections, and Items typically get minted a Handle Identifier. You can reference these objects in the REST API by their handle, as opposed to having to use the internal item-ID.
 
   * `object = dspace.get_handle(Handle Prefix/Handle Suffix)': Returns a Community, Collection, or Item object that matches that handle.
-  
+ 
+ 
 IMAGE  
 [Dapper Men](https://dp.la/item/12e5d867c20e7d9c9824e06aa08f39aa?back_uri=https%3A%2F%2Fdp.la%2Fsearch%3Futf8%3D%25E2%259C%2593%26q%3Ddapper&next=4&previous=2)  
 1912 - 1930  
