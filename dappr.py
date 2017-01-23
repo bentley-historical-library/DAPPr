@@ -450,7 +450,78 @@ class DAPPr:
         return response
         
     # bitstreams
+    def get_bitstreams(self):
+        """
+        Return all bitstreams in DSpace."""
+        
+        response = self._get("/RESTapi/bitstreams")
+        
+        try:
+            bitstreams = response.json()
+            return bitstreams
+        except:
+            exit()
+            
+    def get_bitstream(self, bitstream_id):
+        """
+        Return bitstream."""
+        
+        response = self._get("/RESTapi/bitstreams/" + str(bitstream_id))
+        
+        try:
+            bitstream = response.json()
+            return bitstream
+        except:
+            exit()
+            
+    def get_bitstream_policy(self, bitstream_id):
+        """
+        Return bitstream policies."""
+        
+        response = self._get("/RESTapi/bitstreams/" + str(bitstream_id) + "/policy")
+        
+        try:
+            policy = response.json()
+            return policy
+        except:
+            exit()
+            
+    # TO-DO: Return data of bitstream.
     
+    # TO-DO: Add policy to item. You must post a ResourcePolicy
+    
+    # TO-DO: Update data/file of bitstream. You must put the data
+    
+    def put_bitstream(self, bitstream_id, bitstream):
+        """
+        Update metadata of bitstream. You must put a Bitstream, does not alter the file/data"""
+        
+        token = self._login()
+        response = self._put("/RESTapi/bitstreams/" + str(bitstream_id), token, bitstream)
+        self._logout(token)
+        
+        return response
+        
+    def delete_bitstream(self, bitstream_id):
+        """
+        Delete bitstream from DSpace."""
+        
+        token = self._login()
+        response = self._delete("/RESTapi/bitstreams/" + str(bitstream_id), token)
+        self._logout(token)
+        
+        return response
+        
+    def delete_bitstream_policy(self, bitstream_id, policy_id):
+        """
+        Delete bitstream policy."""
+        
+        token = self._login()
+        response = self._delete("/RESTapi/bitstreams/" + str(bitstream_id) + "/policy/" + str(policy_id), token)
+        self._logout(token)
+        
+        return response
+        
     # handle
     def get_handle(self, handle):
         """

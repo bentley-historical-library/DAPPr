@@ -83,8 +83,18 @@ Items in DSpace represent a "work" and combine metadata and files, known as Bits
 
 In DSpace, Communities, Collections, and Items typically get minted a Handle Identifier. You can reference these objects in the REST API by their handle, as opposed to having to use the internal item-ID.
 
-  * `object = deepblue.get_handle(Handle Prefix/Handle Suffix)': Returns a Community, Collection, or Item object that matches that handle.
+  * `bitstreams = get_bitstreams()`: Return all bitstreams in DSpace.
+  * `bitstream = get_bitstream(Bitstream ID INTEGER)`: Return bitstream.
+  * `policy = get_bitstream_policy(Bitstream ID INTEGER)`: Return bitstream policies.
+  * TO-DO: Return data of bitstream.
+  * TO-DO: Add policy to item. You must post a ResourcePolicy. (See "We have had success updating the bitstream policies at the bitstream endpoint rather than the policy endpoint. You can just embed the policy JSON in the bitstream JSON as for example..." in [Setting a ResourcePolicy via REST API?](https://groups.google.com/forum/#!topic/dspace-tech/5uPhsbNkWek))
+  * TO-DO: Update data/file of bitstream. You must put the data
+  * `deepblue.put_bitstream(Bitstream ID INTEGER)`: Update metadata of bitstream. You must put a Bitstream, does not alter the file/data (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
+  * `delete_bitstream(Bitstream ID)`: Delete bitstream from DSpace.
+  * `delete_bitstream_policy(Bitstream ID INTEGER, Policy ID INTEGER)`: Delete bitstream policy.
 
 ### Handle
 
-Coming soon!
+In DSpace, Communities, Collections, and Items typically get minted a Handle Identifier. You can reference these objects in the REST API by their handle, as opposed to having to use the internal item-ID.
+
+  * `object = deepblue.get_handle(Handle Prefix/Handle Suffix)': Returns a Community, Collection, or Item object that matches that handle.
