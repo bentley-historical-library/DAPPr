@@ -535,6 +535,7 @@ class DAPPr:
         }
         params = {"expand": "bitstreams"}
         response = requests.get(url, headers=headers, params=params)
+        
         if response.status_code == 200:
             object = response.json()
             return object
