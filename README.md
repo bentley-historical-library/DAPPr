@@ -81,7 +81,9 @@ Items in DSpace represent a "work" and combine metadata and files, known as Bits
   
 ### Bitstreams
 
-Coming soon!
+In DSpace, Communities, Collections, and Items typically get minted a Handle Identifier. You can reference these objects in the REST API by their handle, as opposed to having to use the internal item-ID.
+
+  * `object = deepblue.get_handle(Handle Prefix/Handle Suffix)': Returns a Community, Collection, or Item object that matches that handle.
 
 ### Handle
 

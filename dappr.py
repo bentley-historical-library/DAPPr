@@ -448,4 +448,26 @@ class DAPPr:
         self._logout(token)
         
         return response
+        
+    # bitstreams
+    
+    # handle
+    def get_handle(self, handle):
+        """
+        Returns a Community, Collection, or Item object that matches that handle."""
+        
+        token = self._login()
+        url = self.base_url + "/RESTapi/handle/" + handle
+        headers = {
+            "Accept": "application/json",
+            "rest-dspace-token": token
+        }
+        params = {"expand": "bitstreams"}
+        response = requests.get(url, headers=headers, params=params)
+        if response.status_code == 200:
+            object = response.json()
+            return object
+        else:
+            print "Error (" + str(response.status_code) + ") GETting " + "/RESTapi/handle/" + handle
+            exit()
     
