@@ -89,7 +89,7 @@ In DSpace, Communities, Collections, and Items typically get minted a Handle Ide
   * TO-DO: Return data of bitstream.
   * TO-DO: Add policy to item. You must post a ResourcePolicy. (See "We have had success updating the bitstream policies at the bitstream endpoint rather than the policy endpoint. You can just embed the policy JSON in the bitstream JSON as for example..." in [Setting a ResourcePolicy via REST API?](https://groups.google.com/forum/#!topic/dspace-tech/5uPhsbNkWek))
   * TO-DO: Update data/file of bitstream. You must put the data
-  * `dspace.put_bitstream(Bitstream ID INTEGER)`: Update metadata of bitstream. You must put a Bitstream, does not alter the file/data (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
+  * `dspace.put_bitstream(Bitstream ID INTEGER, Bitstream DICTIONARY)`: Update metadata of bitstream. You must put a Bitstream, does not alter the file/data (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
   * `dspace.delete_bitstream(Bitstream ID)`: Delete bitstream from DSpace.
   * `dspace.delete_bitstream_policy(Bitstream ID INTEGER, Policy ID INTEGER)`: Delete bitstream policy.
 
