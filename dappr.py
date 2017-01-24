@@ -8,12 +8,10 @@ class DAPPr:
     a client to communicate with a remote DSpace installation 
     using its backend API."""
 
-    def __init__(self, base_url, email, password, community_id):
+    def __init__(self, base_url, email, password):
         self.base_url = base_url
         self.email = email
-        self.password = password
-        self.community_id = community_id
-    
+        self.password = password    
 
     def _login(self):
         url = self.base_url + "/RESTapi/login"
@@ -488,7 +486,39 @@ class DAPPr:
             
     # TO-DO: Return data of bitstream.
     
-    # TO-DO: Add policy to item. You must post a ResourcePolicy
+    def put_bitstream_policy(self, bitstream_id, policy_list):
+        """
+        Add policy to item. You must post a ResourcePolicy"""
+        
+        token = self._login()
+        
+        url = self.base_url + "/RESTapi/bitstreams/" + str(bitstream_id)
+        response = requests.get(url)
+        
+        if response.status_code == 200:
+            
+            bitstream = response.json()
+            bitstream["policies"] = policy_list
+            
+            url = self.base_url + "/RESTapi/bitstreams/" + str(bitstream_id)
+            headers = {
+                "Accept": "application/json",
+                "rest-dspace-token": token
+            }
+            json = bitstream
+            response = requests.put(url, headers=headers, json=json)
+        
+            if response.status_code == 200:
+                return response
+            else:
+                print "Error PUTting (" + str(response.status_code) + ") " + str(json) + " to " + "/RESTapi/bitstreams/" + str(bitstream_id)
+                exit()
+            
+        else:
+            print "Error (" + str(response.status_code) + ") GETting " + "/RESTapi/bitstreams/" + str(bitstream_id)
+            exit()
+            
+        self._logout(token)
     
     # TO-DO: Update data/file of bitstream. You must put the data
     
@@ -516,8 +546,8 @@ class DAPPr:
         """
         Delete bitstream policy."""
         
-        token = self._login()
         response = self._delete("/RESTapi/bitstreams/" + str(bitstream_id) + "/policy/" + str(policy_id), token)
+        token = self._login()
         self._logout(token)
         
         return response
@@ -527,19 +557,11 @@ class DAPPr:
         """
         Returns a Community, Collection, or Item object that matches that handle."""
         
-        token = self._login()
-        url = self.base_url + "/RESTapi/handle/" + handle
-        headers = {
-            "Accept": "application/json",
-            "rest-dspace-token": token
-        }
-        params = {"expand": "bitstreams"}
-        response = requests.get(url, headers=headers, params=params)
+        response = self._get("/RESTapi/handle/" + handle)
         
-        if response.status_code == 200:
+        try:
             object = response.json()
             return object
-        else:
-            print "Error (" + str(response.status_code) + ") GETting " + "/RESTapi/handle/" + handle
+        except:
             exit()
     
