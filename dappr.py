@@ -32,9 +32,9 @@ class DAPPr:
     
     
     # methods    
-    def _get(self, endpoint):
+    def _get(self, endpoint, expand="metadata"):
         url = self.base_url + endpoint
-        response = requests.get(url)
+        response = requests.get(url, params={"expand": expand})
         
         if response.status_code == 200:
             return response
