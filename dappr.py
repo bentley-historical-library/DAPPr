@@ -1,6 +1,7 @@
 import requests
 import json
 import os
+import humanize
 
 class DAPPr:
     """
@@ -32,9 +33,13 @@ class DAPPr:
     
     
     # methods    
-    def _get(self, endpoint, expand="metadata"):
+    def _get(self, endpoint):
         url = self.base_url + endpoint
-        response = requests.get(url, params={"expand": expand})
+        params = {
+            "expand": "all",
+            "limit": 1000000
+        }
+        response = requests.get(url, params=params)
         
         if response.status_code == 200:
             return response
@@ -564,4 +569,59 @@ class DAPPr:
             return object
         except:
             exit()
+            
+    # bhl
+    def get_handle_extent(self, handle):
+        """
+        Returns the total sizeBytes for all Bitstreams on an Item, all Bitstreams on all Items in a Collection, or all Bitstreams on all Items in all Collections (and all Bitstreams on all Items in all Collections in all Sub-Communities) in a Community."""
+        
+        response = self._get("/RESTapi/handle/" + handle)
+        
+        try:
+            object = response.json()
+            
+            size_bytes = 0
+            
+            if object.get("type") == "item":
+                bitstreams = object.get("bitstreams")
+                for bitstream in bitstreams:
+                    size_bytes += bitstream.get("sizeBytes")
+                    
+            elif object.get("type") == "collection":
+                items = object.get("items")
+                count = 0
+                for item in items:
+                    count += 1
+                    item = self._get("/RESTapi/items/" + str(item.get("id"))).json()
+                    bitstreams = item.get("bitstreams")
+                    for bitstream in bitstreams:
+                        size_bytes += bitstream.get("sizeBytes")  
+                        
+            elif object.get("type") == "community":
+                collections = object.get("collections")
+                for collection in collections:
+                    collection = self._get("/RESTapi/collections/" + str(collection.get("id"))).json()
+                    items = collection.get("items")
+                    for item in items:
+                        item = self._get("/RESTapi/items/" + str(item.get("id"))).json()
+                        bitstreams = item.get("bitstreams")
+                        for bitstream in bitstreams:
+                            size_bytes += bitstream.get("sizeBytes")
+                subcommunities = object.get("subcommunities")
+                for subcommunity in subcommunities:
+                    subcommunity = self._get("/RESTapi/communities/" + str(subcommunity.get("id"))).json()
+                    collections = subcommunity.get("collections")
+                    for collection in collections:
+                        collection = self._get("/RESTapi/collections/" + str(collection.get("id"))).json()
+                        items = collection.get("items")
+                        for item in items:
+                            item = self._get("/RESTapi/items/" + str(item.get("id"))).json()
+                            bitstreams = item.get("bitstreams")
+                            for bitstream in bitstreams:
+                                size_bytes += bitstream.get("sizeBytes")   
+                
+            return humanize.naturalsize(size_bytes)
+        except:
+            exit()
+        
     
