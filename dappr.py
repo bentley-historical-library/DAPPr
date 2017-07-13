@@ -571,6 +571,27 @@ class DAPPr:
             exit()
             
     # bhl
+    def post_item_license(self, item_id):
+        """
+        Posts a license in a license bundle to an item."""
+        
+        token = self._login()
+        license = os.path.join(os.path.abspath(os.path.dirname(__file__)), "license.txt")
+        response = self._post_data("/RESTapi/items/" + str(item_id) + "/bitstreams", token, license)
+        
+        bitstream = response.json()
+        
+        bitstream['name'] = 'license.txt'
+        bitstream['bundleName'] = 'LICENSE'
+        url = self.base_url + '/RESTapi/bitstreams/' + str(bitstream['id'])
+        headers = {
+            "Accept": "application/json",
+            "rest-dspace-token": token
+        }
+        body = bitstream
+        response = requests.put(url, headers=headers, json=body)
+        self._logout(token)
+    
     def get_handle_extent(self, handle):
         """
         Returns the total sizeBytes for all Bitstreams on an Item, all Bitstreams on all Items in a Collection, or all Bitstreams on all Items in all Collections (and all Bitstreams on all Items in all Collections in all Sub-Communities) in a Community."""

@@ -103,6 +103,7 @@ In DSpace, Communities, Collections, and Items typically get minted a Handle Ide
 
 Custom for the Bentley by the Bentley!
 
+  * `bitstream = dspace.post_item_license(Item ID INTEGER)`: Posts a license in a license bundle to an item.
   * `extent = dspace.get_handle_extent(Handle STRING)`: Returns the total sizeBytes for all Bitstreams on an Item, all Bitstreams on all Items in a Collection, or all Bitstreams on all Items in all Collections (and all Bitstreams on all Items in all Collections in all Sub-Communities) in a Community.
  
 
