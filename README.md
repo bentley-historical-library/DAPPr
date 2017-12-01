@@ -87,7 +87,7 @@ In DSpace, Communities, Collections, and Items typically get minted a Handle Ide
   * `bitstream = dspace.get_bitstream(Bitstream ID INTEGER)`: Return bitstream.
   * `policy = dspace.get_bitstream_policy(Bitstream ID INTEGER)`: Return bitstream policies.
   * TO-DO: Return data of bitstream.
-  * `dspace.put_bitstream_policy(Bitsream ID INTEGER, Policy LIST)`: Add policy to item. You must post a ResourcePolicy (see "We have had success updating the bitstream policies at the bitstream endpoint rather than the policy endpoint You can just embed the policy JSON in the bitstream JSON as for example..." in [Setting a ResourcePolicy via REST API?](https://groups.google.com/forum/#!topic/dspace-tech/5uPhsbNkWek)).
+  * `dspace.put_bitstream_policy(Bitsream ID INTEGER, Policy LIST)`: Add policy to bitstream. You must post a ResourcePolicy (see "We have had success updating the bitstream policies at the bitstream endpoint rather than the policy endpoint You can just embed the policy JSON in the bitstream JSON as for example..." in [Setting a ResourcePolicy via REST API?](https://groups.google.com/forum/#!topic/dspace-tech/5uPhsbNkWek)).
   * TO-DO: Update data/file of bitstream. You must put the data
   * `dspace.put_bitstream(Bitstream ID INTEGER, Bitstream DICTIONARY)`: Update metadata of bitstream. You must put a Bitstream, does not alter the file/data (see [Model - Object data types](https://wiki.duraspace.org/display/DSDOC5x/REST+API#RESTAPI-Model-Objectdatatypes)).
   * `dspace.delete_bitstream(Bitstream ID)`: Delete bitstream from DSpace.
@@ -103,6 +103,7 @@ In DSpace, Communities, Collections, and Items typically get minted a Handle Ide
 
 Custom for the Bentley by the Bentley!
 
+  * `bitstream = dspace.post_item_license(Item ID INTEGER)`: Posts a license in a license bundle to an item.
   * `extent = dspace.get_handle_extent(Handle STRING)`: Returns the total sizeBytes for all Bitstreams on an Item, all Bitstreams on all Items in a Collection, or all Bitstreams on all Items in all Collections (and all Bitstreams on all Items in all Collections in all Sub-Communities) in a Community.
  
 
