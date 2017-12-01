@@ -1,7 +1,10 @@
 import requests
+from requests_toolbelt import MultipartEncoder
 import json
+import mimetypes
 import os
 import humanize
+import urllib
 
 class DAPPr:
     """
@@ -53,7 +56,9 @@ class DAPPr:
             "Accept": "application/json",
             "rest-dspace-token": token
         }
-        response = requests.post(url, headers=headers, json=json)
+        with open(os.path.join(path), mode="r") as f:
+            data = f.read()
+        response = requests.post(url, headers=headers, data=data)
         
         if response.status_code == 200:
             return response
@@ -71,6 +76,22 @@ class DAPPr:
             data = f.read()
         response = requests.post(url, headers=headers, data=data)
         
+        if response.status_code == 200:
+            return response
+        else:
+            print "Error (" + str(response.status_code) + ") POSTing " + str(path) + " to " + endpoint
+            exit()
+            
+    def _post_big_data(self, endpoint, token, path):
+        url = self.base_url + endpoint
+        headers = {
+            "Content-Type": "multipart/form-data",
+            "Content-Disposition": "attachment; filename=%s" % urllib.quote(os.path.basename(os.path.join(path))),
+            "rest-dspace-token": token
+        }
+        with open(os.path.join(path), mode="rb") as f:
+            response = requests.post(url, headers=headers, data=f)
+
         if response.status_code == 200:
             return response
         else:
@@ -403,7 +424,7 @@ class DAPPr:
         Add bitstream to item. You must post a Bitstream"""
         
         token = self._login()
-        response = self._post_data("/RESTapi/items/" + str(item_id) + "/bitstreams", token, bitstream_path)
+        response = self._post_big_data("/RESTapi/items/" + str(item_id) + "/bitstreams", token, bitstream_path)
         self._logout(token)
         
         try:
