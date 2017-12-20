@@ -1,5 +1,4 @@
 import requests
-from requests_toolbelt import MultipartEncoder
 import json
 import mimetypes
 import os
@@ -56,9 +55,7 @@ class DAPPr:
             "Accept": "application/json",
             "rest-dspace-token": token
         }
-        with open(os.path.join(path), mode="r") as f:
-            data = f.read()
-        response = requests.post(url, headers=headers, data=data)
+        response = requests.post(url, headers=headers, json=json)
         
         if response.status_code == 200:
             return response
@@ -85,6 +82,7 @@ class DAPPr:
     def _post_big_data(self, endpoint, token, path):
         url = self.base_url + endpoint
         headers = {
+            "Accept": "application/json",
             "Content-Type": "multipart/form-data",
             "Content-Disposition": "attachment; filename=%s" % urllib.quote(os.path.basename(os.path.join(path))),
             "rest-dspace-token": token
