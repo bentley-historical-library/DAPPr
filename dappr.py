@@ -4,6 +4,7 @@ import mimetypes
 import os
 import humanize
 import urllib
+import sys
 
 class DAPPr:
     """
@@ -508,8 +509,14 @@ class DAPPr:
         except:
             exit()
             
-    # TO-DO: Return data of bitstream.
-    
+    def get_bitstream_data(self, bitstream_id):
+        """
+        Return data of bitstream."""
+        
+        response = self._get("/RESTapi/bitstreams/" + str(bitstream_id) + "/retrieve")
+        
+        return response
+        
     def put_bitstream_policy(self, bitstream_id, policy_list):
         """
         Add policy to item. You must post a ResourcePolicy"""
@@ -609,6 +616,39 @@ class DAPPr:
         }
         body = bitstream
         response = requests.put(url, headers=headers, json=body)
+        self._logout(token)
+        
+    def more_title_context(self, handle):
+        """
+        Adds one ancestor from dc.relation.ispartofseries to the title and takes on away from the dc.relation.ispartofseries."""
+        
+        response = self._get("/RESTapi/handle/" + handle)
+        
+        item = response.json()
+        item_id = item['id']
+        if item['type'] != 'item':
+            sys.exit("Not an item!")
+        
+        response = self._get("/RESTapi/items/" + str(item_id) + "/metadata")
+        
+        metadata = response.json()
+        
+        title = [metadatum['value'] for metadatum in metadata if metadatum['key'] == 'dc.title'][0]
+        relation = [metadatum['value'] for metadatum in metadata if metadatum['key'] == 'dc.relation.ispartofseries'][0]
+        
+        new_metadata = []
+        for metadatum in metadata:
+            if metadatum['key'] != 'dc.title' and metadatum['key'] != 'dc.relation.ispartofseries':
+                new_metadata.append(metadatum)
+      
+        more_title_context = relation.split(' - ')[-1] + ' - ' + title
+        new_metadata.append({'key': 'dc.title', 'value': more_title_context})
+        
+        less_relation_context = ' - '.join(relation.split(' - ')[:-1])
+        new_metadata.append({'key': 'dc.relation.ispartofseries', 'value': less_relation_context})
+
+        token = self._login()
+        response = self._put("/RESTapi/items/" + str(item_id) + "/metadata", token, new_metadata)
         self._logout(token)
     
     def get_handle_extent(self, handle):
