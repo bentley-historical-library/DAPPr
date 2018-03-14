@@ -618,6 +618,31 @@ class DAPPr:
         response = requests.put(url, headers=headers, json=body)
         self._logout(token)
         
+    def embed_kaltura_videos(self, handle, kaltura_video_ids):
+        """
+        Embeds one or more Kaltura videos from the Bentley Digital Media Library into a DeepBlue item."""
+        
+        response = self._get("/RESTapi/handle/" + handle)
+        
+        item = response.json()
+        item_id = item['id']
+        if item['type'] != 'item':
+            sys.exit("Not an item!")
+            
+        response = self._get("/RESTapi/items/" + str(item_id) + "/metadata")
+        
+        metadata = response.json()
+        
+        kaltura_player = 1455309001
+        for kaltura_video_id in kaltura_video_ids:
+            value = "https://cdnapisec.kaltura.com/p/1758271/sp/175827100/embedIframeJs/uiconf_id/29300931/partner_id/1758271?autoembed=true&entry_id=" + kaltura_video_id + "&playerId=kaltura_player_" + str(kaltura_player) + "&cache_st=1455309475&width=400&height=330&flashvars[streamerType]=auto"
+            kaltura_player += 1
+            metadata.append({"key": "dc.identifier.videostream", "value": value})
+            
+        token = self._login()
+        response = self._put("/RESTapi/items/" + str(item_id) + "/metadata", token, metadata)
+        self._logout(token)
+        
     def more_title_context(self, handle):
         """
         Adds one ancestor from dc.relation.ispartofseries to the title and takes on away from the dc.relation.ispartofseries."""

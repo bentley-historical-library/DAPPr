@@ -104,6 +104,7 @@ In DSpace, Communities, Collections, and Items typically get minted a Handle Ide
 Custom for the Bentley by the Bentley!
 
   * `bitstream = dspace.post_item_license(Item ID INTEGER)`: Posts a license in a license bundle to an item.
+  * `dspace.embed_kaltura_videos(Handle String, Kaltura ID LIST)`: Embeds one or more Kaltura videos from the Bentley Digital Media Library into a DeepBlue item.
   * `extent = dspace.get_handle_extent(Handle STRING)`: Returns the total sizeBytes for all Bitstreams on an Item, all Bitstreams on all Items in a Collection, or all Bitstreams on all Items in all Collections (and all Bitstreams on all Items in all Collections in all Sub-Communities) in a Community.
   * `dspace.more_title_context(Handle STRING)`: Adds one ancestor from `dc.relation.ispartofseries` to the title and takes on away from the `dc.relation.ispartofseries`. 
 
