@@ -2,6 +2,7 @@ import requests
 import json
 import mimetypes
 import os
+from pprint import pprint
 import humanize
 import urllib
 import sys
@@ -710,6 +711,38 @@ class DAPPr:
         response = self._put("/RESTapi/items/" + str(item_id) + "/metadata", token, new_metadata)
         self._logout(token)
     
+    def get_collection_extent_by_series(self, collection_id):
+        """
+        Returns a dictionary with the extent for each series."""
+        
+        response = self._get("/RESTapi/collections/" + str(collection_id) + "/items")
+        
+        items = response.json()
+        
+        series_extent = {}
+        for item in items:
+            
+            metadata = item['metadata']
+            for metadatum in metadata:  
+                if metadatum['key'] == 'dc.relation.ispartofseries':
+                    relation = metadatum['value']
+                    series = relation.split(' - ')[0].strip()
+            
+            size_bytes = 0
+            bitstreams = item['bitstreams']
+            for bitstream in bitstreams:
+                size_bytes += bitstream['sizeBytes']
+            
+            if series not in series_extent:
+                series_extent[series] = size_bytes
+            else:
+                series_extent[series] += size_bytes
+
+        for series in series_extent:
+            series_extent[series] = humanize.naturalsize(series_extent[series])
+            
+        print pprint(series_extent)
+        
     def get_handle_extent(self, handle):
         """
         Returns the total sizeBytes for all Bitstreams on an Item, all Bitstreams on all Items in a Collection, or all Bitstreams on all Items in all Collections (and all Bitstreams on all Items in all Collections in all Sub-Communities) in a Community."""
