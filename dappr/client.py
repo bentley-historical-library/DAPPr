@@ -165,7 +165,7 @@ class DAPPr(object):
     # public functions
     def logout(self):
         endpoint = "/RESTapi/logout"
-        self._post_json(endpoint)
+        self._post_json(endpoint, json_expected=False)
 
     # communities
     def get_communities(self):
