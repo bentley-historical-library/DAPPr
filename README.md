@@ -6,7 +6,7 @@ DSpace [REST] API Python Programming [Language] resource (DAPPr) is a client to 
 
 ## Installation
 
-`pip install git+https://github.com/djpillen/DAPPr.git`
+`pip install git+https://github.com/bentley-historical-library/DAPPr.git`
 
 ## Usage
 
