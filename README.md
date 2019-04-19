@@ -4,33 +4,17 @@
 
 DSpace [REST] API Python Programming [Language] resource (DAPPr) is a client to communicate with a remote DSpace installation using its backend [API](https://wiki.duraspace.org/display/DSDOC5x/REST+API).
 
+## Installation
+
+`pip install git+https://github.com/djpillen/DAPPr.git`
+
 ## Usage
 
-Create a config.py file (currenlty ignored) with the following dictionaries:
+```python
+from dappr import DAPPr
+dspace = DAPPr()
+```
 
-    dev = {
-        "base_url": STRING,
-        "email": STRING,
-        "password": STRING,
-    }
-
-    prod = {
-        "base_url": STRING,
-        "email": STRING,
-        "password": STRING,
-    }
-    
-In your script, create an object, e.g.:
-
-    from dappr import DAPPr
-    from config import dev
-
-    dspace = DAPPr(
-        dev.get("base_url"),
-        dev.get("email"),
-        dev.get("password"), 
-    )
-    
 Then, use the client to interact with the API...
 
 ### Communities
