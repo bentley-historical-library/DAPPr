@@ -105,7 +105,7 @@ class DAPPr(object):
             token = response.text
             self.session.headers.update({"rest-dspace-token": token})
         else:
-            raise DSpaceError("Error logging in - {}".format(response.txt))
+            raise DSpaceError("Error logging in - {}".format(response.text))
 
     def _request(self, method, url, params={}, expected_response=200, data=None, json=None, json_expected=True):
         response = method(url, params=params, data=data, json=json)
