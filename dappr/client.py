@@ -130,12 +130,12 @@ class DAPPr(object):
     def _post_json(self, endpoint, params={}, expected_response=200, json_expected=True, json=None):
         url = self.base_url + endpoint
         self.session.headers.update({"Accept": "application/json"})
-        response = self._request(self.session.post, url, params=params, json=json, expected_response=200, json_expected=True)
+        response = self._request(self.session.post, url, params=params, json=json, expected_response=expected_response, json_expected=json_expected)
         return response
 
     def _post_data(self, endpoint, params={}, expected_response=200, json_expected=True, data=None):
         url = self.base_url + endpoint
-        response = self._request(self.session.post, url, data=data, expected_response=200, json_expected=True)
+        response = self._request(self.session.post, url, data=data, expected_response=expected_response, json_expected=json_expected)
         return response
 
     def _post_big_data(self, endpoint, params={}, expected_response=200, json_expected=True, data=None, path=None):
@@ -146,21 +146,20 @@ class DAPPr(object):
                                     "Content-Disposition": "attachment; filename=%s" % urllib.quote(os.path.basename(path))
                                     })
 
-        response = self._request(self.session.post, url, data=data, expected_response=200, json_expected=True)
+        response = self._request(self.session.post, url, data=data, expected_response=expected_response, json_expected=json_expected)
         return response
 
     def _put(self, endpoint, json=None, expected_response=200, json_expected=True):
         url = self.base_url + endpoint
         self.session.headers.update({"Accept": "application/json"})
-        response = self._request(self.session.put, url, json=json, expected_response=200, json_expected=True)
+        response = self._request(self.session.put, url, json=json, expected_response=expected_response, json_expected=json_expected)
         return response
 
     def _delete(self, endpoint, expected_response=200, json_expected=True):
         url = self.base_url + endpoint
         self.session.headers.update({"Accept": "application/json"})
-        response = self._request(self.session.delete, url)
+        response = self._request(self.session.delete, url, expected_response=expected_response, json_expected=json_expected)
         return response
-        response = requests.delete(url, headers=headers, expected_response=200, json_expected=True)
 
     # public functions
     def logout(self):
