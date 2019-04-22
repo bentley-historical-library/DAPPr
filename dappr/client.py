@@ -147,11 +147,14 @@ class DAPPr(object):
                                     "Content-Type": "multipart/form-data",
                                     "Content-Disposition": "attachment; filename=%s" % quote(os.path.basename(path))
                                     })
+        del self.session.headers["Content-Type"]
+        del self.session.headers["Content-Disposition"]
 
         response = self._request(self.session.post, url, data=data, expected_response=expected_response, json_expected=json_expected)
+        self.session.headers
         return response
 
-    def _put(self, endpoint, json=None, expected_response=200, json_expected=True):
+    def _put(self, endpoint, json=None, expected_response=200, json_expected=False):
         url = self.base_url + endpoint
         self.session.headers.update({"Accept": "application/json"})
         response = self._request(self.session.put, url, json=json, expected_response=expected_response, json_expected=json_expected)
@@ -449,7 +452,7 @@ class DAPPr(object):
         endpoint = "/RESTapi/bitstreams/{}".format(bitstream_id)
         bitstream = self._get(endpoint).json()
         bitstream["policies"] = policy_list
-        response = self._put(endpoint, json=bitstream)
+        response = self._put(endpoint, json=bitstream, json_expected=False)
         return response
 
     # TO-DO: Update data/file of bitstream. You must put the data
@@ -459,7 +462,7 @@ class DAPPr(object):
         Update metadata of bitstream. You must put a Bitstream, does not alter the file/data"""
 
         endpoint = "/RESTapi/bitstreams/{}".format(bitstream_id)
-        response = self._put(endpoint, json=bitstream)        
+        response = self._put(endpoint, json=bitstream, json_expected=False)        
         return response
 
     def delete_bitstream(self, bitstream_id):
