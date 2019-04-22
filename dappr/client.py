@@ -9,10 +9,12 @@ if sys.version_info[:2] <= (2, 7):
     # Python 2
     get_input = raw_input
     import ConfigParser as configparser
+    from urllib import quote
 else:
     # Python 3
     get_input = input
     import configparser
+    from urllib.parse import quote
 
 
 class DSpaceError(Exception):
@@ -143,7 +145,7 @@ class DAPPr(object):
         self.session.headers.update({
                                     "Accept": "application/json",
                                     "Content-Type": "multipart/form-data",
-                                    "Content-Disposition": "attachment; filename=%s" % urllib.quote(os.path.basename(path))
+                                    "Content-Disposition": "attachment; filename=%s" % quote(os.path.basename(path))
                                     })
 
         response = self._request(self.session.post, url, data=data, expected_response=expected_response, json_expected=json_expected)
@@ -380,7 +382,7 @@ class DAPPr(object):
         Update metadata in item. You must put a MetadataEntry"""
 
         endpoint = "/RESTapi/items/{}/metadata".format(item_id)
-        response = self._put(endpoint, json=metadata_list)        
+        response = self._put(endpoint, json=metadata_list, json_expected=False)        
         return response
 
     def delete_item(self, item_id):
