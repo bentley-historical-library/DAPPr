@@ -137,6 +137,7 @@ class DAPPr(object):
 
     def _post_data(self, endpoint, params={}, expected_response=200, json_expected=True, data=None):
         url = self.base_url + endpoint
+        self.session.headers.update({"Accept": "application/json"})
         response = self._request(self.session.post, url, data=data, expected_response=expected_response, json_expected=json_expected)
         return response
 
