@@ -594,7 +594,7 @@ class DAPPr(object):
         less_relation_context = ' - '.join(relation.split(' - ')[:-1])
         self.update_metadata_entry_by_key(metadata, "dc.title", more_title_context)
         self.update_metadata_entry_by_key(metadata, "dc.relation.ispartofseries", less_relation_context)
-        response = self.put_item_metata(item_id, metadata)
+        response = self.put_item_metadata(item_id, metadata)
         return response
 
     def get_collection_extent_by_series(self, collection_id):
