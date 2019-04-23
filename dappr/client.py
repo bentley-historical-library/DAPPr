@@ -500,8 +500,7 @@ class DAPPr(object):
         if os.path.exists(license_txt_filepath):
             return license_txt_filepath
         else:
-            print("license.txt not found at {}".format(license_txt_filepath))
-            print("Create license.txt at the default filepath or supply a different filepath")
+            raise DSpaceError("license.txt not found at {}. Supplied a valid filepath using the supplied_filepath parameter.".format(license_txt_filepath))
 
     def post_item_license(self, item_id, supplied_filepath=False):
         """
