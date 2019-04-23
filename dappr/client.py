@@ -147,11 +147,10 @@ class DAPPr(object):
                                     "Content-Type": "multipart/form-data",
                                     "Content-Disposition": "attachment; filename=%s" % quote(os.path.basename(path))
                                     })
+        
+        response = self._request(self.session.post, url, data=data, expected_response=expected_response, json_expected=json_expected)
         del self.session.headers["Content-Type"]
         del self.session.headers["Content-Disposition"]
-
-        response = self._request(self.session.post, url, data=data, expected_response=expected_response, json_expected=json_expected)
-        self.session.headers
         return response
 
     def _put(self, endpoint, json=None, expected_response=200, json_expected=False):
