@@ -38,6 +38,7 @@ class DAPPr(object):
             self.base_url = configuration["base_url"]
             self.email = configuration["email"]
             password = configuration["password"]
+            self._parse_groups(configuration)
         self._login(password)
 
     def _load_config(self, instance_name):
@@ -77,6 +78,19 @@ class DAPPr(object):
             else:
                 sys.exit()
 
+    def _parse_groups(self, configuration):
+        self.groups = {}
+        group_keys = [key for key in configuration.keys() if (key.startswith("group_") and key.endswith("_id"))]
+        if any(group_keys):
+            group_names = list(set([group_key.replace("group_", "").replace("_id", "").strip() for group_key in group_keys]))
+            for group_name in group_names:
+                group_key_prefix = "group_{}".format(group_name)
+                group_id = configuration["{}_id".format(group_key_prefix)]
+                group_description = configuration["{}_description".format(group_key_prefix)]
+                group_long_name = configuration["{}_long_name".format(group_key_prefix)]
+                group_metadata = {"description": group_description, "group_id": group_id, "long_name": group_long_name}
+                self.groups[group_name] = group_metadata
+
     def _save_config(self, config):
         with open(self.config_file, "w") as f:
             config.write(f)
@@ -86,7 +100,7 @@ class DAPPr(object):
         base_url = get_input("Base URL: ")
         email = get_input("Email: ")
         store_password = get_input("Store a password for this instance? (y/n) ")
-        if store_password in ["y", "yes"]:
+        if store_password.lower().strip() in ["y", "yes"]:
             password = getpass.getpass("Enter password: ")
         else:
             password = False
@@ -95,8 +109,21 @@ class DAPPr(object):
         config.set(instance_name, "email", email)
         if password:
             config.set(instance_name, "password", password)
+        add_groupIds = get_input("Would you like to add groupIds for this instance? (y/n) ")
+        while add_groupIds.lower().strip() in ["y", "yes"]:
+            group_name_long = get_input("Enter a long name for the group (e.g., Bentley Only Users): ")
+            group_name = get_input("Enter a short name for the group (e.g., um_users): ")
+            print("Enter a description for the group")
+            print("Example: Archival materials. Access restricted to Bentley Reading Room.")
+            group_description = get_input("Description: ")
+            group_id = get_input("Enter the groupId for the group in DSpace (e.g., 474): ")
+            group_name_prefix = "group_{}".format(group_name)
+            config.set(instance_name, "{}_long_name".format(group_name_prefix), group_name_long)
+            config.set(instance_name, "{}_id".format(group_name_prefix), group_id)
+            config.set(instance_name, "{}_description".format(group_name_prefix), group_description)
+            add_groupIds = get_input("Add another groupId for this instance? (y/n) ")
         self._save_config(config)
-        return {"base_url": base_url, "email": email, "password": password}
+        return {key: value for (key, value) in config.items(instance_name)}
 
     def _login(self, password):
         url = self.base_url + "/RESTapi/login"
