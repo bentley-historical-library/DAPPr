@@ -490,7 +490,7 @@ class DAPPr(object):
         return response.json()
 
     # bhl
-    def _find_license_txt(supplied_filepath):
+    def _find_license_txt(self, supplied_filepath):
         if supplied_filepath:
             license_txt_filepath = supplied_filepath
         else:
