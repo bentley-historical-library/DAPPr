@@ -37,7 +37,9 @@ class DAPPr(object):
             configuration = self._load_config(instance_name)
             self.base_url = configuration["base_url"]
             self.email = configuration["email"]
-            password = configuration["password"]
+            password = configuration.get("password")
+            if not password:
+                password = getpass.getpass("Password: ")
             self._parse_groups(configuration)
         self._login(password)
 
