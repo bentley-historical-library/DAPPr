@@ -4,34 +4,32 @@
 
 DSpace [REST] API Python Programming [Language] resource (DAPPr) is a client to communicate with a remote DSpace installation using its backend [API](https://wiki.duraspace.org/display/DSDOC5x/REST+API).
 
+## Installation
+
+`pip install git+https://github.com/bentley-historical-library/DAPPr.git`
+
 ## Usage
 
-Create a config.py file (currenlty ignored) with the following dictionaries:
+```python
+from dappr import DAPPr
+dspace = DAPPr()
+```
 
-    dev = {
-        "base_url": STRING,
-        "email": STRING,
-        "password": STRING,
-    }
+The first time you call `DAPPr()`, you will be prompted to configure a DSpace instance, supplying a base URL, email address, and optionally a password and group IDs and descriptions. Configured instances are saved in a `.dappr` file in the user's home directory.
 
-    prod = {
-        "base_url": STRING,
-        "email": STRING,
-        "password": STRING,
-    }
-    
-In your script, create an object, e.g.:
+ Future calls to `DAPPr()` will prompt you to select one of the configured instances or give you the option to configure another instance (i.e., production and development). `DAPPr()` optionally takes an `instance_name` parameter to pre-select a configured instance, or `base_url`, `email`, and `password` parameters to log in without selecting a configured instance. 
 
-    from dappr import DAPPr
-    from config import dev
+### Groups
+Any groups that are configured when setting up an instance are accessible through the `dspace.groups` variable. This functionality is primarily intended to assist with setting bitstream policies. The `dspace.groups` variable contains a dictionary of configured groups with keys of the group's configured "short name" and values of a dictionary containing a longer name for the group (`long_name`), a description of the access conditions set by the group (`description`), and the groups DSpace groupId (`group_id`).
 
-    dspace = DAPPr(
-        dev.get("base_url"),
-        dev.get("email"),
-        dev.get("password"), 
-    )
-    
-Then, use the client to interact with the API...
+```python
+from dappr import DAPPr
+
+dspace = DAPPr(instance_name="prod")
+bhl_staff_group = dspace.groups["bhl_staff"]
+bhl_staff_group_id = bhl_staff_group["group_id"]
+bhl_staff_group_description = bhl_staff_group["description"]
+```
 
 ### Communities
 
@@ -104,15 +102,7 @@ In DSpace, Communities, Collections, and Items typically get minted a Handle Ide
 Custom for the Bentley by the Bentley!
 
   * `bitstream = dspace.post_item_license(Item ID INTEGER)`: Posts a license in a license bundle to an item.
-  * `dspace.embed_kaltura_videos(Handle String, Kaltura ID LIST)`: Embeds one or more Kaltura videos from the Bentley Digital Media Library into a DeepBlue item.
-  * `dspace.embed_kaltura_videos_from_csv(CSV PATH)`: Embeds one or more Kaltura videos from the Bentley Digital Media Library into a DeepBlue item. Takes the "BDML spreadsheet.
-  
-_Example CSV:_
-
-handle | mivideo_ids
---- | ---
-http://hdl.handle.net/2027.42/142731 | 1_q9nwx1ui; 1_ksgcpr9y
-  
+  * `dspace.embed_kaltura_videos(Handle String, Kaltura ID LIST)`: Embeds one or more Kaltura videos from the Bentley Digital Media Library into a DeepBlue item.  
   * `extent = dspace.get_handle_extent(Handle STRING)`: Returns the total sizeBytes for all Bitstreams on an Item, all Bitstreams on all Items in a Collection, or all Bitstreams on all Items in all Collections (and all Bitstreams on all Items in all Collections in all Sub-Communities) in a Community.
   * `series_extent = dspace.get_collection_extent_by_series(Collection ID)`: Returns a dictionary with the extent for each series.
   * `dspace.more_title_context(Handle STRING)`: Adds one ancestor from `dc.relation.ispartofseries` to the title and takes on away from the `dc.relation.ispartofseries`. 

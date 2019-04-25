@@ -1,2 +1,7 @@
 config.py
 *.pyc
+venv/
+.vscode
+*egg-info
+dist/
+build/
