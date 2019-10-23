@@ -398,7 +398,7 @@ class DAPPr(object):
 
         endpoint = "/RESTapi/items/{}/metadata".format(item_id)
         response = self._post_json(endpoint, json=metadata_list, json_expected=False)
-        return response.json()
+        return response
 
     def post_item_bitstream(self, item_id, bitstream_path):
         """
