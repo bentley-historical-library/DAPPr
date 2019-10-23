@@ -397,7 +397,7 @@ class DAPPr(object):
         Add metadata to item. You must post an array of MetadataEntry"""
 
         endpoint = "/RESTapi/items/{}/metadata".format(item_id)
-        response = self._post_json(endpoint, json=metadata_list)
+        response = self._post_json(endpoint, json=metadata_list, json_expected=False)
         return response.json()
 
     def post_item_bitstream(self, item_id, bitstream_path):
@@ -430,7 +430,7 @@ class DAPPr(object):
         Clear item metadata."""
 
         endpoint = "/RESTapi/items/{}/metadata".format(item_id)
-        response = self._delete(endpoint)
+        response = self._delete(endpoint, json_expected=False)
         return response
 
     def delete_item_bitstream(self, item_id, bitstream_id):
