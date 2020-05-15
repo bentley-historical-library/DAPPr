@@ -129,12 +129,12 @@ class DAPPr(object):
 
     def _login(self, password):
         url = self.base_url + "/RESTapi/login"
-        body = {"email": self.email, "password": password}
-        response = requests.post(url, json=body)
+        params = {"email": self.email, "password": password}
+        response = requests.post(url, params=params)
         if response.status_code == 200:
             self.session = requests.Session()
-            token = response.text
-            self.session.headers.update({"rest-dspace-token": token})
+            token = response.cookies["JSESSIONID"]
+            self.session.cookies.update({"JSESSIONID": token})
         else:
             raise DSpaceError("Error logging in - {}".format(response.text))
 
