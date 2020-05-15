@@ -217,27 +217,27 @@ class DAPPr(object):
         response = self._get(endpoint)
         return response.json()
 
-    def get_community(self, community_id):
+    def get_community(self, community_uuid):
         """
         Returns community."""
 
-        endpoint = "/RESTapi/communities/{}".format(community_id)
+        endpoint = "/RESTapi/communities/{}".format(community_uuid)
         response = self._get(endpoint)
         return response.json()
 
-    def get_community_collections(self, community_id):
+    def get_community_collections(self, community_uuid):
         """
         Returns array of collections of community."""
 
-        endpoint = "/RESTapi/communities/{}/collections".format(community_id)
+        endpoint = "/RESTapi/communities/{}/collections".format(community_uuid)
         response = self._get(endpoint)
         return response.json()
 
-    def get_community_subcommunities(self, community_id):
+    def get_community_subcommunities(self, community_uuid):
         """
         Returns array of subcommunities of community."""
 
-        endpoint = "/RESTapi/communities/{}/communities".format(community_id)
+        endpoint = "/RESTapi/communities/{}/communities".format(community_uuid)
         response = self._get(endpoint)
         return response.json()
 
@@ -249,52 +249,52 @@ class DAPPr(object):
         response = self._post_json(endpoint, json=community_dictionary)
         return response.json()
 
-    def post_community_collection(self, community_id, collection_dictionary):
+    def post_community_collection(self, community_uuid, collection_dictionary):
         """
         Create new collections in community. You must post Collection."""
 
-        endpoint = "/RESTapi/communities/{}/collections".format(community_id)
+        endpoint = "/RESTapi/communities/{}/collections".format(community_uuid)
         response = self._post_json(endpoint, json=collection_dictionary)
         return response.json()
 
-    def post_community_subcommunity(self, community_id, community_dictionary):
+    def post_community_subcommunity(self, community_uuid, community_dictionary):
         """
         Create new subcommunity in community. You must post Community."""
 
-        endpoint = "/RESTapi/communities/{}/communities".format(community_id)
+        endpoint = "/RESTapi/communities/{}/communities".format(community_uuid)
         response = self._post_json(endpoint, json=community_dictionary)
         return response.json()
 
-    def put_community(self, community_id, community_dictionary):
+    def put_community(self, community_uuid, community_dictionary):
         """
         Update community. You must put Community"""
 
-        endpoint = "/RESTapi/communities/{}".format(community_id)
+        endpoint = "/RESTapi/communities/{}".format(community_uuid)
         response = self._put(endpoint, json=community_dictionary)
         return response
 
-    def delete_community(self, community_id):
+    def delete_community(self, community_uuid):
         """
         Delete community."""
 
-        endpoint = "/RESTapi/communities/{}".format(community_id)
+        endpoint = "/RESTapi/communities/{}".format(community_uuid)
         response = self._delete(endpoint)
 
         return response
 
-    def delete_community_collection(self, community_id, collection_id):
+    def delete_community_collection(self, community_uuid, collection_uuid):
         """
         Delete collection in community."""
 
-        endpoint = "/RESTapi/communities/{}/collections/{}".format(community_id, collection_id)
+        endpoint = "/RESTapi/communities/{}/collections/{}".format(community_uuid, collection_uuid)
         response = self._delete(endpoint)
         return response
 
-    def delete_community_subcommunity(self, community_id, subcommunity_id):
+    def delete_community_subcommunity(self, community_uuid, subcommunity_uuid):
         """
         Delete subcommunity in community."""
 
-        endpoint = "/RESTapi/communities/{}/communities/{}".format(community_id, subcommunity_id)
+        endpoint = "/RESTapi/communities/{}/communities/{}".format(community_uuid, subcommunity_uuid)
         response = self._delete(endpoint)
         return response
 
@@ -307,53 +307,53 @@ class DAPPr(object):
         response = self._get(endpoint)
         return response.json()
 
-    def get_collection(self, collection_id):
+    def get_collection(self, collection_uuid):
         """
         Return collection with id."""
 
-        endpoint = "/RESTapi/collections/{}".format(collection_id)
+        endpoint = "/RESTapi/collections/{}".format(collection_uuid)
         response = self._get(endpoint)
         return response.json()
 
-    def get_collection_items(self, collection_id):
+    def get_collection_items(self, collection_uuid):
         """
         Return all items of collection."""
 
-        endpoint = "/RESTapi/collections/{}/items".format(collection_id)
+        endpoint = "/RESTapi/collections/{}/items".format(collection_uuid)
         response = self._get(endpoint)
         return response.json()
 
-    def post_collection_item(self, collection_id, item_dictionary):
+    def post_collection_item(self, collection_uuid, item_dictionary):
         """
         Create posted item in collection. You must post an Item"""
 
-        endpoint = "/RESTapi/collections/{}/items".format(collection_id)
+        endpoint = "/RESTapi/collections/{}/items".format(collection_uuid)
         response = self._post_json(endpoint, json=item_dictionary)     
         return response.json()
 
     # TO-DO: Find collection by passed name.
 
-    def put_collection(self, collection_id, collection_dictionary):
+    def put_collection(self, collection_uuid, collection_dictionary):
         """
         Update collection. You must put Collection."""
 
-        endpoint = "/RESTapi/collections/{}".format(collection_id)
+        endpoint = "/RESTapi/collections/{}".format(collection_uuid)
         response = self._put(endpoint, json=collection_dictionary)
         return response
 
-    def delete_collection(self, collection_id):
+    def delete_collection(self, collection_uuid):
         """
         Delete collection from DSpace."""
 
-        endpoint = "/RESTapi/collections/{}".format(collection_id)
+        endpoint = "/RESTapi/collections/{}".format(collection_uuid)
         response = self._delete(endpoint)
         return response
 
-    def delete_collection_item(self, collection_id, item_id):
+    def delete_collection_item(self, collection_uuid, item_uuid):
         """
         Delete item in collection."""
 
-        endpoint = "/RESTapi/collections/{}/items/{}".format(collection_id, item_id)
+        endpoint = "/RESTapi/collections/{}/items/{}".format(collection_uuid, item_uuid)
         response = self._delete(endpoint)
         return response
 
@@ -366,78 +366,78 @@ class DAPPr(object):
         response = self._get(endpoint)
         return response.json()
 
-    def get_item(self, item_id):
+    def get_item(self, item_uuid):
         """
         Return item."""
 
-        endpoint = "/RESTapi/items/{}".format(item_id)
+        endpoint = "/RESTapi/items/{}".format(item_uuid)
         response = self._get(endpoint)
         return response.json()
 
-    def get_item_metadata(self, item_id):
+    def get_item_metadata(self, item_uuid):
         """
         Return item metadata."""
 
-        endpoint = "/RESTapi/items/{}/metadata".format(item_id)
+        endpoint = "/RESTapi/items/{}/metadata".format(item_uuid)
         response = self._get(endpoint)
         return response.json()
 
-    def get_item_bitstreams(self, item_id):
+    def get_item_bitstreams(self, item_uuid):
         """
         Return item bitstreams."""
 
-        endpoint = "/RESTapi/items/{}/bitstreams".format(item_id)
+        endpoint = "/RESTapi/items/{}/bitstreams".format(item_uuid)
         response = self._get(endpoint)
         return response.json()
 
     # TO-DO: Find items by metadata entry. You must post a MetadataEntry.
 
-    def post_item_metadata(self, item_id, metadata_list):
+    def post_item_metadata(self, item_uuid, metadata_list):
         """
         Add metadata to item. You must post an array of MetadataEntry"""
 
-        endpoint = "/RESTapi/items/{}/metadata".format(item_id)
+        endpoint = "/RESTapi/items/{}/metadata".format(item_uuid)
         response = self._post_json(endpoint, json=metadata_list, json_expected=False)
         return response
 
-    def post_item_bitstream(self, item_id, bitstream_path):
+    def post_item_bitstream(self, item_uuid, bitstream_path):
         """
         Add bitstream to item. You must post a Bitstream"""
 
-        endpoint = "/RESTapi/items/{}/bitstreams".format(item_id)
+        endpoint = "/RESTapi/items/{}/bitstreams".format(item_uuid)
         with open(bitstream_path, "rb") as f:
             response = self._post_big_data(endpoint, data=f, path=bitstream_path)
         return response.json()
 
-    def put_item_metadata(self, item_id, metadata_list):
+    def put_item_metadata(self, item_uuid, metadata_list):
         """
         Update metadata in item. You must put a MetadataEntry"""
 
-        endpoint = "/RESTapi/items/{}/metadata".format(item_id)
+        endpoint = "/RESTapi/items/{}/metadata".format(item_uuid)
         response = self._put(endpoint, json=metadata_list, json_expected=False)        
         return response
 
-    def delete_item(self, item_id):
+    def delete_item(self, item_uuid):
         """
         Delete item."""
 
-        endpoint = "/RESTapi/items/{}".format(item_id)
+        endpoint = "/RESTapi/items/{}".format(item_uuid)
         response = self._delete(endpoint)
         return response
 
-    def delete_item_metadata(self, item_id):
+    def delete_item_metadata(self, item_uuid):
         """
         Clear item metadata."""
 
-        endpoint = "/RESTapi/items/{}/metadata".format(item_id)
+        endpoint = "/RESTapi/items/{}/metadata".format(item_uuid)
         response = self._delete(endpoint, json_expected=False)
         return response
 
-    def delete_item_bitstream(self, item_id, bitstream_id):
+    def delete_item_bitstream(self, item_uuid, bitstream_uuid):
         """
         Delete item bitstream."""
 
-        endpoint = "/RESTapi/items/{}/bitstreams/{}".format(bitstream_id)
+        endpoint = "/RESTapi/items/{}/bitstreams/{}".format(bitstream_uuid)
         response = self._delete(endpoint)
         return response
 
@@ -450,35 +450,35 @@ class DAPPr(object):
         response = self._get(endpoint)
         return response.json()
 
-    def get_bitstream(self, bitstream_id):
+    def get_bitstream(self, bitstream_uuid):
         """
         Return bitstream."""
 
-        endpoint = "/RESTapi/bitstreams/{}".format(bitstream_id)
+        endpoint = "/RESTapi/bitstreams/{}".format(bitstream_uuid)
         response = self._get(endpoint)
         return response.json()
 
-    def get_bitstream_policy(self, bitstream_id):
+    def get_bitstream_policy(self, bitstream_uuid):
         """
         Return bitstream policies."""
 
-        endpoint = "/RESTapi/bitstreams/{}/policy".format(bitstream_id)
+        endpoint = "/RESTapi/bitstreams/{}/policy".format(bitstream_uuid)
         response = self._get(endpoint)
         return response.json()
 
-    def get_bitstream_data(self, bitstream_id):
+    def get_bitstream_data(self, bitstream_uuid):
         """
         Return data of bitstream."""
 
-        endpoint = "/RESTapi/bitstreams/{}/retrieve".format(bitstream_id)
+        endpoint = "/RESTapi/bitstreams/{}/retrieve".format(bitstream_uuid)
         response = self._get(endpoint)
         return response
 
-    def put_bitstream_policy(self, bitstream_id, policy_list):
+    def put_bitstream_policy(self, bitstream_uuid, policy_list):
         """
         Add policy to item. You must post a ResourcePolicy"""
 
-        endpoint = "/RESTapi/bitstreams/{}".format(bitstream_id)
+        endpoint = "/RESTapi/bitstreams/{}".format(bitstream_uuid)
         bitstream = self._get(endpoint).json()
         bitstream["policies"] = policy_list
         response = self._put(endpoint, json=bitstream, json_expected=False)
@@ -486,27 +486,27 @@ class DAPPr(object):
 
     # TO-DO: Update data/file of bitstream. You must put the data
 
-    def put_bitstream(self, bitstream_id, bitstream):
+    def put_bitstream(self, bitstream_uuid, bitstream):
         """
         Update metadata of bitstream. You must put a Bitstream, does not alter the file/data"""
 
-        endpoint = "/RESTapi/bitstreams/{}".format(bitstream_id)
+        endpoint = "/RESTapi/bitstreams/{}".format(bitstream_uuid)
         response = self._put(endpoint, json=bitstream, json_expected=False)        
         return response
 
-    def delete_bitstream(self, bitstream_id):
+    def delete_bitstream(self, bitstream_uuid):
         """
         Delete bitstream from DSpace."""
 
-        endpoint = "/RESTapi/bitstreams/{}".format(bitstream_id)
+        endpoint = "/RESTapi/bitstreams/{}".format(bitstream_uuid)
         response = self._delete(endpoint)
         return response
 
-    def delete_bitstream_policy(self, bitstream_id, policy_id):
+    def delete_bitstream_policy(self, bitstream_uuid, policy_uuid):
         """
         Delete bitstream policy."""
 
-        endpoint = "/RESTapi/bitstreams/{}/policy/{}".format(bitstream_id, policy_id)
+        endpoint = "/RESTapi/bitstreams/{}/policy/{}".format(bitstream_uuid, policy_uuid)
         response = self._delete(endpoint)
         return response
 
@@ -532,18 +532,18 @@ class DAPPr(object):
         else:
             raise DSpaceError("license.txt not found at {}. Supplied a valid filepath using the supplied_filepath parameter.".format(license_txt_filepath))
 
-    def post_item_license(self, item_id, supplied_filepath=False):
+    def post_item_license(self, item_uuid, supplied_filepath=False):
         """
         Posts a license in a license bundle to an item."""
 
         license_txt = self._find_license_txt(supplied_filepath)
-        endpoint = "/RESTapi/items/{}/bitstreams".format(item_id)
+        endpoint = "/RESTapi/items/{}/bitstreams".format(item_uuid)
         with open(license_txt, "r") as f:
             bitstream = self._post_data(endpoint, data=f.read()).json()
-            bitstream_id = bitstream["uuid"]
+            bitstream_uuid = bitstream["uuid"]
             bitstream['name'] = 'license.txt'
             bitstream['bundleName'] = 'LICENSE'
-            bitstream_endpoint = "/RESTapi/bitstreams/{}".format(bitstream_id)
+            bitstream_endpoint = "/RESTapi/bitstreams/{}".format(bitstream_uuid)
             response = self._put(bitstream_endpoint, json=bitstream)
             return response
 
@@ -552,16 +552,16 @@ class DAPPr(object):
         Embeds one or more Kaltura videos from the Bentley Digital Media Library into a DeepBlue item."""
 
         item = self.get_handle(handle)
-        item_id = item['id']
+        item_uuid = item['id']
         if item['type'] != 'item':
             raise DSpaceError("Not an item!")
-        metadata = self.get_item_metadata(item_id)    
+        metadata = self.get_item_metadata(item_uuid)    
         kaltura_player = 1455309001
         for kaltura_video_id in kaltura_video_ids:
             value = "https://cdnapisec.kaltura.com/p/1758271/sp/175827100/embedIframeJs/uiconf_id/29300931/partner_id/1758271?autoembed=true&entry_id=" + kaltura_video_id + "&playerId=kaltura_player_" + str(kaltura_player) + "&cache_st=1455309475&width=400&height=330&flashvars[streamerType]=auto"
             kaltura_player += 1
             metadata.append({"key": "dc.identifier.videostream", "value": value})
-        response = self.put_item_metadata(item_id, metadata)
+        response = self.put_item_metadata(item_uuid, metadata)
         return response
 
     def get_metadata_entry_by_key(self, metadata, key):
@@ -584,23 +584,23 @@ class DAPPr(object):
         Adds one ancestor from dc.relation.ispartofseries to the title and takes on away from the dc.relation.ispartofseries."""
 
         item = self.get_handle(handle)
-        item_id = item['id']
+        item_uuid = item['id']
         if item['type'] != 'item':
             sys.exit("Not an item!")
-        metadata = self.get_item_metadata(item_id)
+        metadata = self.get_item_metadata(item_uuid)
         title = self.get_metadata_entry_value_by_key(metadata, "dc.title")
         relation = self.get_metadata_entry_value_by_key(metadata, "dc.relation.ispartofseries")
         more_title_context = relation.split(' - ')[-1] + ' - ' + title
         less_relation_context = ' - '.join(relation.split(' - ')[:-1])
         self.update_metadata_entry_by_key(metadata, "dc.title", more_title_context)
         self.update_metadata_entry_by_key(metadata, "dc.relation.ispartofseries", less_relation_context)
-        response = self.put_item_metadata(item_id, metadata)
+        response = self.put_item_metadata(item_uuid, metadata)
         return response
 
-    def get_collection_extent_by_series(self, collection_id):
+    def get_collection_extent_by_series(self, collection_uuid):
         """
         Returns a dictionary with the extent for each series."""
-        items = self.get_collection_items(collection_id)
+        items = self.get_collection_items(collection_uuid)
 
         series_extent = {}
         for item in items:
@@ -629,8 +629,8 @@ class DAPPr(object):
         size_bytes = 0
         items = collection.get("items")
         for item in items:
-            item_id = item["uuid"]
-            item_json = self.get_item(item_id)
+            item_uuid = item["uuid"]
+            item_json = self.get_item(item_uuid)
             size_bytes += self.get_item_extent(item_json)
         return size_bytes
 
@@ -638,18 +638,18 @@ class DAPPr(object):
         size_bytes = 0
         collections = community.get("collection")
         for collection in collections:
-            collection_id = collection["uuid"]
-            collection_json = self.get_collection(collection_id)
+            collection_uuid = collection["uuid"]
+            collection_json = self.get_collection(collection_uuid)
             size_bytes += self.get_collection_extent(collection_json)
 
         subcommunities = community.get("subcommunities")
         for subcommunity in subcommunities:
-            subcommunity_id = subcommunity["uuid"]
-            subcommunity_json = self.get_community(subcommunity_id)
+            subcommunity_uuid = subcommunity["uuid"]
+            subcommunity_json = self.get_community(subcommunity_uuid)
             subcommunity_collections = subcommunity_json.get("collections")
             for subcommunity_collection in subcommunity_collections:
-                subcommunity_collection_id = subcommunity_collection["uuid"]
-                subcommunity_collection_json = self.get_collection(subcommunity_collection_id)
+                subcommunity_collection_uuid = subcommunity_collection["uuid"]
+                subcommunity_collection_json = self.get_collection(subcommunity_collection_uuid)
                 size_bytes += self.get_collection_extent(subcommunity_collection_json)
 
         return size_bytes
