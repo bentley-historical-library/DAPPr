@@ -2,7 +2,7 @@
 
 ![Dapper men](https://images.nypl.org/index.php?id=5205109&t=w)
 
-DSpace [REST] API Python Programming [Language] resource (DAPPr) is a client to communicate with a remote DSpace installation using its backend [API](https://wiki.duraspace.org/display/DSDOC5x/REST+API).
+DSpace [REST] API Python Programming [Language] resource (DAPPr) is a client to communicate with a remote DSpace 6.x installation using its backend [API](https://wiki.lyrasis.org/display/DSDOC6x/REST+API).
 
 ## Installation
 
