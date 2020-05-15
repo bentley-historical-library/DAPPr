@@ -540,7 +540,7 @@ class DAPPr(object):
         endpoint = "/RESTapi/items/{}/bitstreams".format(item_id)
         with open(license_txt, "r") as f:
             bitstream = self._post_data(endpoint, data=f.read()).json()
-            bitstream_id = bitstream["id"]
+            bitstream_id = bitstream["uuid"]
             bitstream['name'] = 'license.txt'
             bitstream['bundleName'] = 'LICENSE'
             bitstream_endpoint = "/RESTapi/bitstreams/{}".format(bitstream_id)
@@ -629,7 +629,7 @@ class DAPPr(object):
         size_bytes = 0
         items = collection.get("items")
         for item in items:
-            item_id = item["id"]
+            item_id = item["uuid"]
             item_json = self.get_item(item_id)
             size_bytes += self.get_item_extent(item_json)
         return size_bytes
@@ -638,17 +638,17 @@ class DAPPr(object):
         size_bytes = 0
         collections = community.get("collection")
         for collection in collections:
-            collection_id = collection["id"]
+            collection_id = collection["uuid"]
             collection_json = self.get_collection(collection_id)
             size_bytes += self.get_collection_extent(collection_json)
 
         subcommunities = community.get("subcommunities")
         for subcommunity in subcommunities:
-            subcommunity_id = subcommunity["id"]
+            subcommunity_id = subcommunity["uuid"]
             subcommunity_json = self.get_community(subcommunity_id)
             subcommunity_collections = subcommunity_json.get("collections")
             for subcommunity_collection in subcommunity_collections:
-                subcommunity_collection_id = subcommunity_collection["id"]
+                subcommunity_collection_id = subcommunity_collection["uuid"]
                 subcommunity_collection_json = self.get_collection(subcommunity_collection_id)
                 size_bytes += self.get_collection_extent(subcommunity_collection_json)
 
