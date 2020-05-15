@@ -537,15 +537,12 @@ class DAPPr(object):
         Posts a license in a license bundle to an item."""
 
         license_txt = self._find_license_txt(supplied_filepath)
-        endpoint = "/RESTapi/items/{}/bitstreams".format(item_uuid)
-        with open(license_txt, "r") as f:
-            bitstream = self._post_data(endpoint, data=f.read()).json()
-            bitstream_uuid = bitstream["uuid"]
-            bitstream['name'] = 'license.txt'
-            bitstream['bundleName'] = 'LICENSE'
-            bitstream_endpoint = "/RESTapi/bitstreams/{}".format(bitstream_uuid)
-            response = self._put(bitstream_endpoint, json=bitstream)
-            return response
+        bitstream = self.post_item_bitstream(item_uuid, license_txt)
+        bitstream_uuid = bitstream["uuid"]
+        bitstream['name'] = 'license.txt'
+        bitstream['bundleName'] = 'LICENSE'
+        response = self.put_bitstream(bitstream_uuid, bitstream)
+        return response
 
     def embed_kaltura_videos(self, handle, kaltura_video_ids):
         """
