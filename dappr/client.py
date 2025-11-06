@@ -128,7 +128,7 @@ class DAPPr(object):
         return {key: value for (key, value) in config.items(instance_name)}
 
     def _login(self, password):
-        url = self.base_url + "/RESTapi/login"
+        url = self.base_url + "/rest/login"
         params = {"email": self.email, "password": password}
         response = requests.post(url, params=params)
         if response.status_code == 200:
@@ -197,7 +197,7 @@ class DAPPr(object):
 
     # public functions
     def logout(self):
-        endpoint = "/RESTapi/logout"
+        endpoint = "/rest/logout"
         self._post_json(endpoint, json_expected=False)
 
     # communities
@@ -205,7 +205,7 @@ class DAPPr(object):
         """
         Returns array of all communities in DSpace."""
 
-        endpoint = "/RESTapi/communities"
+        endpoint = "/rest/communities"
         response = self._get(endpoint)
         return response.json()
 
@@ -213,7 +213,7 @@ class DAPPr(object):
         """
         Returns array of all top communities in DSpace."""
 
-        endpoint = "/RESTapi/communities/top-communities"
+        endpoint = "/rest/communities/top-communities"
         response = self._get(endpoint)
         return response.json()
 
@@ -221,7 +221,7 @@ class DAPPr(object):
         """
         Returns community."""
 
-        endpoint = "/RESTapi/communities/{}".format(community_uuid)
+        endpoint = "/rest/communities/{}".format(community_uuid)
         response = self._get(endpoint)
         return response.json()
 
@@ -229,7 +229,7 @@ class DAPPr(object):
         """
         Returns array of collections of community."""
 
-        endpoint = "/RESTapi/communities/{}/collections".format(community_uuid)
+        endpoint = "/rest/communities/{}/collections".format(community_uuid)
         response = self._get(endpoint)
         return response.json()
 
@@ -237,7 +237,7 @@ class DAPPr(object):
         """
         Returns array of subcommunities of community."""
 
-        endpoint = "/RESTapi/communities/{}/communities".format(community_uuid)
+        endpoint = "/rest/communities/{}/communities".format(community_uuid)
         response = self._get(endpoint)
         return response.json()
 
@@ -245,7 +245,7 @@ class DAPPr(object):
         """
         Create new community at top level. You must post community."""
 
-        endpoint = "/RESTapi/communities/"
+        endpoint = "/rest/communities/"
         response = self._post_json(endpoint, json=community_dictionary)
         return response.json()
 
@@ -253,7 +253,7 @@ class DAPPr(object):
         """
         Create new collections in community. You must post Collection."""
 
-        endpoint = "/RESTapi/communities/{}/collections".format(community_uuid)
+        endpoint = "/rest/communities/{}/collections".format(community_uuid)
         response = self._post_json(endpoint, json=collection_dictionary)
         return response.json()
 
@@ -261,7 +261,7 @@ class DAPPr(object):
         """
         Create new subcommunity in community. You must post Community."""
 
-        endpoint = "/RESTapi/communities/{}/communities".format(community_uuid)
+        endpoint = "/rest/communities/{}/communities".format(community_uuid)
         response = self._post_json(endpoint, json=community_dictionary)
         return response.json()
 
@@ -269,7 +269,7 @@ class DAPPr(object):
         """
         Update community. You must put Community"""
 
-        endpoint = "/RESTapi/communities/{}".format(community_uuid)
+        endpoint = "/rest/communities/{}".format(community_uuid)
         response = self._put(endpoint, json=community_dictionary)
         return response
 
@@ -277,7 +277,7 @@ class DAPPr(object):
         """
         Delete community."""
 
-        endpoint = "/RESTapi/communities/{}".format(community_uuid)
+        endpoint = "/rest/communities/{}".format(community_uuid)
         response = self._delete(endpoint)
 
         return response
@@ -286,7 +286,7 @@ class DAPPr(object):
         """
         Delete collection in community."""
 
-        endpoint = "/RESTapi/communities/{}/collections/{}".format(community_uuid, collection_uuid)
+        endpoint = "/rest/communities/{}/collections/{}".format(community_uuid, collection_uuid)
         response = self._delete(endpoint)
         return response
 
@@ -294,7 +294,7 @@ class DAPPr(object):
         """
         Delete subcommunity in community."""
 
-        endpoint = "/RESTapi/communities/{}/communities/{}".format(community_uuid, subcommunity_uuid)
+        endpoint = "/rest/communities/{}/communities/{}".format(community_uuid, subcommunity_uuid)
         response = self._delete(endpoint)
         return response
 
@@ -303,7 +303,7 @@ class DAPPr(object):
         """
         Returns array of collections of community."""
 
-        endpoint = "/RESTapi/collections"
+        endpoint = "/rest/collections"
         response = self._get(endpoint)
         return response.json()
 
@@ -311,7 +311,7 @@ class DAPPr(object):
         """
         Return collection with id."""
 
-        endpoint = "/RESTapi/collections/{}".format(collection_uuid)
+        endpoint = "/rest/collections/{}".format(collection_uuid)
         response = self._get(endpoint)
         return response.json()
 
@@ -319,7 +319,7 @@ class DAPPr(object):
         """
         Return all items of collection."""
 
-        endpoint = "/RESTapi/collections/{}/items".format(collection_uuid)
+        endpoint = "/rest/collections/{}/items".format(collection_uuid)
         response = self._get(endpoint)
         return response.json()
 
@@ -327,7 +327,7 @@ class DAPPr(object):
         """
         Create posted item in collection. You must post an Item"""
 
-        endpoint = "/RESTapi/collections/{}/items".format(collection_uuid)
+        endpoint = "/rest/collections/{}/items".format(collection_uuid)
         response = self._post_json(endpoint, json=item_dictionary)     
         return response.json()
 
@@ -337,7 +337,7 @@ class DAPPr(object):
         """
         Update collection. You must put Collection."""
 
-        endpoint = "/RESTapi/collections/{}".format(collection_uuid)
+        endpoint = "/rest/collections/{}".format(collection_uuid)
         response = self._put(endpoint, json=collection_dictionary)
         return response
 
@@ -345,7 +345,7 @@ class DAPPr(object):
         """
         Delete collection from DSpace."""
 
-        endpoint = "/RESTapi/collections/{}".format(collection_uuid)
+        endpoint = "/rest/collections/{}".format(collection_uuid)
         response = self._delete(endpoint)
         return response
 
@@ -353,7 +353,7 @@ class DAPPr(object):
         """
         Delete item in collection."""
 
-        endpoint = "/RESTapi/collections/{}/items/{}".format(collection_uuid, item_uuid)
+        endpoint = "/rest/collections/{}/items/{}".format(collection_uuid, item_uuid)
         response = self._delete(endpoint)
         return response
 
@@ -362,7 +362,7 @@ class DAPPr(object):
         """
         Return list of items."""
 
-        endpoint = "/RESTapi/items"
+        endpoint = "/rest/items"
         response = self._get(endpoint)
         return response.json()
 
@@ -370,7 +370,7 @@ class DAPPr(object):
         """
         Return item."""
 
-        endpoint = "/RESTapi/items/{}".format(item_uuid)
+        endpoint = "/rest/items/{}".format(item_uuid)
         response = self._get(endpoint)
         return response.json()
 
@@ -378,7 +378,7 @@ class DAPPr(object):
         """
         Return item metadata."""
 
-        endpoint = "/RESTapi/items/{}/metadata".format(item_uuid)
+        endpoint = "/rest/items/{}/metadata".format(item_uuid)
         response = self._get(endpoint)
         return response.json()
 
@@ -386,7 +386,7 @@ class DAPPr(object):
         """
         Return item bitstreams."""
 
-        endpoint = "/RESTapi/items/{}/bitstreams".format(item_uuid)
+        endpoint = "/rest/items/{}/bitstreams".format(item_uuid)
         response = self._get(endpoint)
         return response.json()
 
@@ -396,7 +396,7 @@ class DAPPr(object):
         """
         Add metadata to item. You must post an array of MetadataEntry"""
 
-        endpoint = "/RESTapi/items/{}/metadata".format(item_uuid)
+        endpoint = "/rest/items/{}/metadata".format(item_uuid)
         response = self._post_json(endpoint, json=metadata_list, json_expected=False)
         return response
 
@@ -404,7 +404,7 @@ class DAPPr(object):
         """
         Add bitstream to item. You must post a Bitstream"""
 
-        endpoint = "/RESTapi/items/{}/bitstreams".format(item_uuid)
+        endpoint = "/rest/items/{}/bitstreams".format(item_uuid)
         with open(bitstream_path, "rb") as f:
             response = self._post_big_data(endpoint, data=f, path=bitstream_path)
         return response.json()
@@ -413,7 +413,7 @@ class DAPPr(object):
         """
         Update metadata in item. You must put a MetadataEntry"""
 
-        endpoint = "/RESTapi/items/{}/metadata".format(item_uuid)
+        endpoint = "/rest/items/{}/metadata".format(item_uuid)
         response = self._put(endpoint, json=metadata_list, json_expected=False)        
         return response
 
@@ -421,7 +421,7 @@ class DAPPr(object):
         """
         Delete item."""
 
-        endpoint = "/RESTapi/items/{}".format(item_uuid)
+        endpoint = "/rest/items/{}".format(item_uuid)
         response = self._delete(endpoint)
         return response
 
@@ -429,7 +429,7 @@ class DAPPr(object):
         """
         Clear item metadata."""
 
-        endpoint = "/RESTapi/items/{}/metadata".format(item_uuid)
+        endpoint = "/rest/items/{}/metadata".format(item_uuid)
         response = self._delete(endpoint, json_expected=False)
         return response
 
@@ -437,7 +437,7 @@ class DAPPr(object):
         """
         Delete item bitstream."""
 
-        endpoint = "/RESTapi/items/{}/bitstreams/{}".format(bitstream_uuid)
+        endpoint = "/rest/items/{}/bitstreams/{}".format(bitstream_uuid)
         response = self._delete(endpoint)
         return response
 
@@ -446,7 +446,7 @@ class DAPPr(object):
         """
         Return all bitstreams in DSpace."""
 
-        endpoint = "/RESTapi/bitstreams"
+        endpoint = "/rest/bitstreams"
         response = self._get(endpoint)
         return response.json()
 
@@ -454,7 +454,7 @@ class DAPPr(object):
         """
         Return bitstream."""
 
-        endpoint = "/RESTapi/bitstreams/{}".format(bitstream_uuid)
+        endpoint = "/rest/bitstreams/{}".format(bitstream_uuid)
         response = self._get(endpoint)
         return response.json()
 
@@ -462,7 +462,7 @@ class DAPPr(object):
         """
         Return bitstream policies."""
 
-        endpoint = "/RESTapi/bitstreams/{}/policy".format(bitstream_uuid)
+        endpoint = "/rest/bitstreams/{}/policy".format(bitstream_uuid)
         response = self._get(endpoint)
         return response.json()
 
@@ -470,7 +470,7 @@ class DAPPr(object):
         """
         Return data of bitstream."""
 
-        endpoint = "/RESTapi/bitstreams/{}/retrieve".format(bitstream_uuid)
+        endpoint = "/rest/bitstreams/{}/retrieve".format(bitstream_uuid)
         response = self._get(endpoint)
         return response
 
@@ -478,7 +478,7 @@ class DAPPr(object):
         """
         Add policy to item. You must post a ResourcePolicy"""
 
-        endpoint = "/RESTapi/bitstreams/{}".format(bitstream_uuid)
+        endpoint = "/rest/bitstreams/{}".format(bitstream_uuid)
         bitstream = self._get(endpoint).json()
         bitstream["policies"] = policy_list
         response = self._put(endpoint, json=bitstream, json_expected=False)
@@ -490,7 +490,7 @@ class DAPPr(object):
         """
         Update metadata of bitstream. You must put a Bitstream, does not alter the file/data"""
 
-        endpoint = "/RESTapi/bitstreams/{}".format(bitstream_uuid)
+        endpoint = "/rest/bitstreams/{}".format(bitstream_uuid)
         response = self._put(endpoint, json=bitstream, json_expected=False)        
         return response
 
@@ -498,7 +498,7 @@ class DAPPr(object):
         """
         Delete bitstream from DSpace."""
 
-        endpoint = "/RESTapi/bitstreams/{}".format(bitstream_uuid)
+        endpoint = "/rest/bitstreams/{}".format(bitstream_uuid)
         response = self._delete(endpoint)
         return response
 
@@ -506,7 +506,7 @@ class DAPPr(object):
         """
         Delete bitstream policy."""
 
-        endpoint = "/RESTapi/bitstreams/{}/policy/{}".format(bitstream_uuid, policy_uuid)
+        endpoint = "/rest/bitstreams/{}/policy/{}".format(bitstream_uuid, policy_uuid)
         response = self._delete(endpoint)
         return response
 
@@ -515,7 +515,7 @@ class DAPPr(object):
         """
         Returns a Community, Collection, or Item object that matches that handle."""
 
-        endpoint = "/RESTapi/handle/{}".format(handle)
+        endpoint = "/rest/handle/{}".format(handle)
         response = self._get(endpoint)
         return response.json()
 
