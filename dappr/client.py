@@ -531,8 +531,58 @@ class DAPPr(object):
             return license_txt_filepath
         else:
             raise DSpaceError("license.txt not found at {}. Supplied a valid filepath using the supplied_filepath parameter.".format(license_txt_filepath))
+            
+    def ensure_license_bundle(item_uuid):
+        bundles_url = f"{self.base_url}/items/{item_uuid}/bundles"
+        headers = {"Accept": "application/json"}
+        response = requests.get(bundles_url, headers=headers)
+        response.raise_for_status()
+        bundles = response.json()
+        for bundle in bundles:
+            if bundle.get("name") == "LICENSE":
+                return bundle  # Found!
+    
+        # Not found, create it
+        return create_license_bundle(item_uuid)
+        
+    def create_license_bundle(item_uuid):
+        url = f"{self.base_url}/items/{item_uuid}/bundles"
+        data = {"name": "LICENSE"}
+        headers = {"Accept": "application/json"}
+        response = requests.post(url, json=data, headers=headers)
+        response.raise_for_status()
+        return response.json()
 
     def post_item_license(self, item_uuid, supplied_filepath=False):
+        """
+        Posts a license in a license bundle to an item.
+        """
+        # Find license file
+        license_txt = self._find_license_txt(supplied_filepath)
+        # Get the LICENSE bundle for the item
+        license_bundle = self.ensure_license_bundle(item_uuid)  # You'll need this method
+        bundle_id = license_bundle['uuid']
+        # POST the license file as bitstream to LICENSE bundle
+        bitstream = self.post_bundle_bitstream(bundle_id, license_txt)
+        bitstream['name'] = 'license.txt'
+        response = self.put_bitstream(bitstream['uuid'], bitstream)
+        return response
+
+    def post_bundle_bitstream(bundle_id, filename):
+        """ #Posts a file to the specified bundle.
+        #Returns the bitstream dict."""
+        
+        url = f"{self.base_url}/bundles/{bundle_id}/bitstreams"
+        with open(filename, "rb") as f:
+            file_data = f.read()
+        headers = {"Accept": "application/json"}
+        headers["Content-Type"] = "application/octet-stream"
+        params = {"name": "license.txt"}  # Set name for bitstream (optional)
+        response = requests.post(url, headers=headers, params=params, data=file_data)
+        response.raise_for_status()
+        return response.json()
+    
+    def post_item_license_a(self, item_uuid, supplied_filepath=False):
         """
         Posts a license in a license bundle to an item."""
 
